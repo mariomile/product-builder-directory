@@ -12,7 +12,7 @@ Transform the existing Next.js MVP into a deployed, demo-ready terminal-styled r
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Stabilize** - Pin dependencies, remove template boilerplate, resolve Radix conflicts
+- [x] **Phase 1: Stabilize** - Pin dependencies, remove template boilerplate, resolve Radix conflicts (completed 2026-03-12)
 - [ ] **Phase 2: Terminal Design System** - Full terminal aesthetic with Geist Mono, black/white/cyan palette, restyled components
 - [ ] **Phase 3: Security and Performance** - Sanitize search, lock down RLS and edge function, add pagination and debounce
 - [ ] **Phase 4: Infrastructure and Deploy** - Create Supabase project, seed data, configure MCP, deploy to Vercel
@@ -86,7 +86,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Stabilize | 1/2 | In Progress|  |
+| 1. Stabilize | 2/2 | Complete   | 2026-03-12 |
 | 2. Terminal Design System | 0/? | Not started | - |
 | 3. Security and Performance | 0/? | Not started | - |
 | 4. Infrastructure and Deploy | 0/? | Not started | - |

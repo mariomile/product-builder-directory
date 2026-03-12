@@ -11,7 +11,7 @@
 - [ ] **STAB-02**: Error boundaries (error.tsx) exist at app/ and app/resources/[slug]/ with terminal-styled fallback
 - [x] **STAB-03**: All dependencies pinned to exact versions (no "latest")
 - [ ] **STAB-04**: AI classification JSON from Claude is validated against expected schema before database insert
-- [ ] **STAB-05**: Unused Supabase auth template boilerplate removed (auth pages, protected routes, theme switcher)
+- [x] **STAB-05**: Unused Supabase auth template boilerplate removed (auth pages, protected routes, theme switcher)
 
 ### Design
 
@@ -85,7 +85,7 @@
 | STAB-02 | Phase 2 | Pending |
 | STAB-03 | Phase 1 | Complete |
 | STAB-04 | Phase 2 | Pending |
-| STAB-05 | Phase 1 | Pending |
+| STAB-05 | Phase 1 | Complete |
 | DSGN-01 | Phase 2 | Pending |
 | DSGN-02 | Phase 2 | Pending |
 | DSGN-03 | Phase 2 | Pending |
