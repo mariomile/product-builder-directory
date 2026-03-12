@@ -9,7 +9,7 @@
 
 - [ ] **STAB-01**: Search input debounces 300ms before triggering server navigation
 - [ ] **STAB-02**: Error boundaries (error.tsx) exist at app/ and app/resources/[slug]/ with terminal-styled fallback
-- [ ] **STAB-03**: All dependencies pinned to exact versions (no "latest")
+- [x] **STAB-03**: All dependencies pinned to exact versions (no "latest")
 - [ ] **STAB-04**: AI classification JSON from Claude is validated against expected schema before database insert
 - [ ] **STAB-05**: Unused Supabase auth template boilerplate removed (auth pages, protected routes, theme switcher)
 
@@ -45,7 +45,7 @@
 ### Code Quality
 
 - [ ] **QUAL-01**: Label maps (typeLabels, pillarLabels, typeColors) extracted to shared lib/constants.ts
-- [ ] **QUAL-02**: Radix UI package conflicts resolved (meta-package vs individual packages)
+- [x] **QUAL-02**: Radix UI package conflicts resolved (meta-package vs individual packages)
 
 ## v2 Requirements
 
@@ -83,7 +83,7 @@
 |-------------|-------|--------|
 | STAB-01 | Phase 3 | Pending |
 | STAB-02 | Phase 2 | Pending |
-| STAB-03 | Phase 1 | Pending |
+| STAB-03 | Phase 1 | Complete |
 | STAB-04 | Phase 2 | Pending |
 | STAB-05 | Phase 1 | Pending |
 | DSGN-01 | Phase 2 | Pending |
@@ -104,7 +104,7 @@
 | INFR-03 | Phase 4 | Pending |
 | INFR-04 | Phase 4 | Pending |
 | QUAL-01 | Phase 2 | Pending |
-| QUAL-02 | Phase 1 | Pending |
+| QUAL-02 | Phase 1 | Complete |
 
 **Coverage:**
 - v1 requirements: 24 total
