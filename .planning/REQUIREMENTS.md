@@ -81,36 +81,36 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| STAB-01 | TBD | Pending |
-| STAB-02 | TBD | Pending |
-| STAB-03 | TBD | Pending |
-| STAB-04 | TBD | Pending |
-| STAB-05 | TBD | Pending |
-| DSGN-01 | TBD | Pending |
-| DSGN-02 | TBD | Pending |
-| DSGN-03 | TBD | Pending |
-| DSGN-04 | TBD | Pending |
-| DSGN-05 | TBD | Pending |
-| DSGN-06 | TBD | Pending |
-| DSGN-07 | TBD | Pending |
-| PERF-01 | TBD | Pending |
-| PERF-02 | TBD | Pending |
-| SECR-01 | TBD | Pending |
-| SECR-02 | TBD | Pending |
-| SECR-03 | TBD | Pending |
-| SECR-04 | TBD | Pending |
-| INFR-01 | TBD | Pending |
-| INFR-02 | TBD | Pending |
-| INFR-03 | TBD | Pending |
-| INFR-04 | TBD | Pending |
-| QUAL-01 | TBD | Pending |
-| QUAL-02 | TBD | Pending |
+| STAB-01 | Phase 3 | Pending |
+| STAB-02 | Phase 2 | Pending |
+| STAB-03 | Phase 1 | Pending |
+| STAB-04 | Phase 2 | Pending |
+| STAB-05 | Phase 1 | Pending |
+| DSGN-01 | Phase 2 | Pending |
+| DSGN-02 | Phase 2 | Pending |
+| DSGN-03 | Phase 2 | Pending |
+| DSGN-04 | Phase 2 | Pending |
+| DSGN-05 | Phase 2 | Pending |
+| DSGN-06 | Phase 2 | Pending |
+| DSGN-07 | Phase 2 | Pending |
+| PERF-01 | Phase 3 | Pending |
+| PERF-02 | Phase 3 | Pending |
+| SECR-01 | Phase 3 | Pending |
+| SECR-02 | Phase 3 | Pending |
+| SECR-03 | Phase 3 | Pending |
+| SECR-04 | Phase 3 | Pending |
+| INFR-01 | Phase 4 | Pending |
+| INFR-02 | Phase 4 | Pending |
+| INFR-03 | Phase 4 | Pending |
+| INFR-04 | Phase 4 | Pending |
+| QUAL-01 | Phase 2 | Pending |
+| QUAL-02 | Phase 1 | Pending |
 
 **Coverage:**
 - v1 requirements: 24 total
-- Mapped to phases: 0
-- Unmapped: 24 ⚠️
+- Mapped to phases: 24
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-12*
-*Last updated: 2026-03-12 after initial definition*
+*Last updated: 2026-03-12 after roadmap creation*
