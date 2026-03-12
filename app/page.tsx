@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import { ResourceGrid } from "@/components/resource-grid";
 import { SearchBar } from "@/components/search-bar";
 import { Filters } from "@/components/filters";
-import { ThemeSwitcher } from "@/components/theme-switcher";
 
 type SearchParams = {
   search?: string;
@@ -25,7 +24,6 @@ export default function Home({
           <span className="font-semibold text-sm">
             Product Builder Directory
           </span>
-          <ThemeSwitcher />
         </div>
       </nav>
 
