@@ -27,10 +27,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   1. Running `npm install` on a fresh clone produces identical `node_modules` -- no version drift from "latest" specifiers
   2. No auth-related pages, protected route middleware, or theme switcher components exist in the codebase
   3. The app builds and runs locally without Radix UI console warnings or peer dependency errors
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: TBD
+- [ ] 01-01-PLAN.md — Pin all dependencies to exact versions and remove radix-ui meta-package conflict (STAB-03, QUAL-02)
+- [ ] 01-02-PLAN.md — Delete Supabase auth template boilerplate and theme switcher, update layout.tsx and page.tsx (STAB-05)
 
 ### Phase 2: Terminal Design System
 **Goal**: The entire UI presents a cohesive terminal aesthetic -- monospace font, black/white/cyan only, sharp corners, monochrome badges -- with proper error and loading states
@@ -85,7 +86,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Stabilize | 0/? | Not started | - |
+| 1. Stabilize | 0/2 | Not started | - |
 | 2. Terminal Design System | 0/? | Not started | - |
 | 3. Security and Performance | 0/? | Not started | - |
 | 4. Infrastructure and Deploy | 0/? | Not started | - |
