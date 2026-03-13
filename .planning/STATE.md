@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: "Completed 04-01-PLAN.md: RLS DELETE policy applied, 002_seed tracked"
-last_updated: "2026-03-13T15:26:27.348Z"
+stopped_at: "Completed 04-03-PLAN.md: Vercel deploy live, smoke test passed — v1.0 milestone achieved"
+last_updated: "2026-03-13T15:35:17.298Z"
 last_activity: 2026-03-13 -- Completed Phase 02 terminal design system (all 3 plans verified)
 progress:
   total_phases: 4
   completed_phases: 3
   total_plans: 10
-  completed_plans: 8
+  completed_plans: 9
   percent: 50
 ---
 
@@ -58,6 +58,7 @@ Progress: [█████░░░░░] 50%
 | Phase 03-security-and-performance P01 | 2 | 3 tasks | 4 files |
 | Phase 03-security-and-performance P02 | 7 | 2 tasks | 6 files |
 | Phase 04-infrastructure-and-deploy P01 | 2 | 2 tasks | 2 files |
+| Phase 04-infrastructure-and-deploy P03 | 10 | 2 tasks | 0 files |
 
 ## Accumulated Context
 
@@ -88,6 +89,8 @@ Recent decisions affecting current work:
 - [Phase 03-security-and-performance]: Page reset pattern: all router.push handlers call params.delete('page') before navigating
 - [Phase 04-infrastructure-and-deploy]: Used Supabase Management API /database/query endpoint instead of MCP apply_migration (CLI not installed, MCP migrations endpoint 404)
 - [Phase 04-infrastructure-and-deploy]: 002_seed tracking: version 20240101000002 inserted retroactively with ON CONFLICT DO NOTHING — safe to retry
+- [Phase 04-infrastructure-and-deploy]: Production URL is https://product-builder-directory.vercel.app (canonical short URL from Vercel main branch deploy)
+- [Phase 04-infrastructure-and-deploy]: .vercel/project.json gitignored per Vercel convention; SYNC_SECRET matches Supabase edge function secrets from Plan 02
 
 ### Pending Todos
 
@@ -100,6 +103,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-13T15:26:27.346Z
-Stopped at: Completed 04-01-PLAN.md: RLS DELETE policy applied, 002_seed tracked
+Last session: 2026-03-13T15:35:17.296Z
+Stopped at: Completed 04-03-PLAN.md: Vercel deploy live, smoke test passed — v1.0 milestone achieved
 Resume file: None

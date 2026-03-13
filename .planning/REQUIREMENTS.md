@@ -40,7 +40,7 @@
 - [x] **INFR-01**: Supabase project created with EU region, migrations executed, 20 resources seeded
 - [ ] **INFR-02**: Supabase MCP configured and tested with 5 demo queries
 - [ ] **INFR-03**: Raindrop sync edge function deployed with cron schedule
-- [ ] **INFR-04**: Application deployed to Vercel with production URL and correct env vars
+- [x] **INFR-04**: Application deployed to Vercel with production URL and correct env vars
 
 ### Code Quality
 
@@ -102,7 +102,7 @@
 | INFR-01 | Phase 4 | Complete |
 | INFR-02 | Phase 4 | Pending |
 | INFR-03 | Phase 4 | Pending |
-| INFR-04 | Phase 4 | Pending |
+| INFR-04 | Phase 4 | Complete |
 | QUAL-01 | Phase 2 | Complete |
 | QUAL-02 | Phase 1 | Complete |
 
