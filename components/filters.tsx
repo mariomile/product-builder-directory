@@ -22,7 +22,7 @@ function FilterGroup({
   const handleFilter = useCallback(
     (value: string) => {
       const params = new URLSearchParams(searchParams.toString());
-      params.delete("page"); // Reset to page 1 on any filter change
+      params.delete("page");
       if (activeValue === value) {
         params.delete(paramKey);
       } else {
@@ -37,7 +37,7 @@ function FilterGroup({
 
   return (
     <div className="flex flex-col gap-2">
-      <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+      <span className="text-xs font-mono text-muted-foreground tracking-wider">
         {label}
       </span>
       <div className="flex gap-1.5 flex-wrap">
@@ -45,7 +45,7 @@ function FilterGroup({
           <Badge
             key={option.value}
             variant={activeValue === option.value ? "default" : "outline"}
-            className="cursor-pointer hover:bg-accent transition-colors"
+            className="cursor-pointer hover:bg-accent transition-colors font-mono text-xs"
             onClick={() => handleFilter(option.value)}
           >
             {option.label}
@@ -74,15 +74,15 @@ export function Filters() {
   return (
     <div className="flex flex-col gap-4 w-full">
       <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-        <FilterGroup label="Type" paramKey="type" options={TYPES} />
+        <FilterGroup label="--type" paramKey="type" options={TYPES} />
       </div>
       <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-        <FilterGroup label="Pillar" paramKey="pillar" options={PILLARS} />
+        <FilterGroup label="--pillar" paramKey="pillar" options={PILLARS} />
       </div>
       <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-        <FilterGroup label="Level" paramKey="level" options={LEVELS} />
+        <FilterGroup label="--level" paramKey="level" options={LEVELS} />
         <FilterGroup
-          label="Price"
+          label="--price"
           paramKey="free"
           options={[
             { value: "true", label: "Free" },
@@ -93,9 +93,9 @@ export function Filters() {
       {activeFilters.length > 0 && (
         <button
           onClick={clearAll}
-          className="text-xs text-muted-foreground hover:text-foreground underline self-start"
+          className="text-xs font-mono text-muted-foreground hover:text-primary transition-colors self-start"
         >
-          Clear all filters
+          [clear filters]
         </button>
       )}
     </div>

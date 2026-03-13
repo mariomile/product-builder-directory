@@ -1,6 +1,5 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useTransition } from "react";
 
@@ -28,7 +27,7 @@ export function SearchBar() {
       if (debounceRef.current) clearTimeout(debounceRef.current);
       debounceRef.current = setTimeout(() => {
         const params = new URLSearchParams(searchParams.toString());
-        params.delete("page"); // Reset to page 1 on search change
+        params.delete("page");
         if (value) {
           params.set("search", value);
         } else {
@@ -43,20 +42,24 @@ export function SearchBar() {
   );
 
   return (
-    <div className="relative w-full max-w-xl">
-      <Input
+    <div className="flex items-center w-full max-w-2xl border border-border bg-card h-12 px-4 focus-within:border-primary transition-colors">
+      <span className="text-primary font-bold mr-3 flex-shrink-0 select-none text-base">
+        {">"}
+      </span>
+      <input
         ref={inputRef}
         type="search"
-        placeholder="Search resources... (⌘K)"
+        placeholder="search_resources..."
         defaultValue={searchParams.get("search") ?? ""}
         onChange={(e) => handleSearch(e.target.value)}
-        className="h-12 text-base pl-4 pr-10"
+        className="flex-1 bg-transparent text-foreground text-sm outline-none placeholder:text-muted-foreground font-mono"
       />
-      {isPending && (
-        <div className="absolute right-3 top-1/2 -translate-y-1/2">
-          <div className="h-4 w-4 animate-spin rounded-none border-2 border-muted-foreground border-t-transparent" />
-        </div>
-      )}
+      <div className="flex items-center gap-3 ml-3 flex-shrink-0">
+        {isPending && (
+          <div className="h-3 w-3 border border-muted-foreground border-t-transparent animate-spin" />
+        )}
+        <span className="text-xs text-muted-foreground font-mono">⌘K</span>
+      </div>
     </div>
   );
 }
