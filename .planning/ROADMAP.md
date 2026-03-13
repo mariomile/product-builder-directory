@@ -13,7 +13,7 @@ Transform the existing Next.js MVP into a deployed, demo-ready terminal-styled r
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Stabilize** - Pin dependencies, remove template boilerplate, resolve Radix conflicts (completed 2026-03-12)
-- [ ] **Phase 2: Terminal Design System** - Full terminal aesthetic with Geist Mono, black/white/cyan palette, restyled components
+- [x] **Phase 2: Terminal Design System** - Full terminal aesthetic with Geist Mono, black/white/cyan palette, restyled components (completed 2026-03-13)
 - [ ] **Phase 3: Security and Performance** - Sanitize search, lock down RLS and edge function, add pagination and debounce
 - [ ] **Phase 4: Infrastructure and Deploy** - Create Supabase project, seed data, configure MCP, deploy to Vercel
 
@@ -46,9 +46,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Foundation: dark mode, terminal CSS palette, Geist Mono font, lib/constants.ts (DSGN-01, DSGN-02, DSGN-03, QUAL-01)
-- [ ] 02-02-PLAN.md — Component restyle: monochrome badges, sharp corners, Cmd+K, detail page de-rainbowed (DSGN-04, DSGN-05, DSGN-07)
-- [ ] 02-03-PLAN.md — Resilience: error boundaries, loading skeletons, lib/validators.ts (STAB-02, STAB-04, DSGN-06)
+- [x] 02-01-PLAN.md — Foundation: dark mode, terminal CSS palette, Geist Mono font, lib/constants.ts (DSGN-01, DSGN-02, DSGN-03, QUAL-01)
+- [x] 02-02-PLAN.md — Component restyle: monochrome badges, sharp corners, Cmd+K, detail page de-rainbowed (DSGN-04, DSGN-05, DSGN-07)
+- [x] 02-03-PLAN.md — Resilience: error boundaries, loading skeletons, lib/validators.ts (STAB-02, STAB-04, DSGN-06)
 
 ### Phase 3: Security and Performance
 **Goal**: The app is safe to expose publicly and handles real-world usage patterns -- sanitized inputs, protected endpoints, paginated results, responsive search
@@ -60,11 +60,11 @@ Plans:
   3. Resources display 20 per page with working next/previous navigation that preserves active filters
   4. The search input waits 300ms after the user stops typing before triggering navigation -- no per-keystroke page reloads
   5. Required environment variables are validated at startup and missing ones produce clear error messages
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
+- [ ] 03-01-PLAN.md — Security: PostgREST injection sanitizer, RLS DELETE policy, edge function auth, startup env validation (SECR-01, SECR-02, SECR-03, SECR-04)
+- [ ] 03-02-PLAN.md — Performance: offset pagination with PaginationBar, filteredCount display, 300ms search debounce, page param reset on filter change (PERF-01, PERF-02, STAB-01)
 
 ### Phase 4: Infrastructure and Deploy
 **Goal**: The application is live on a production URL with a real database, seeded content, working sync pipeline, and MCP ready for webinar demo
@@ -88,6 +88,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Stabilize | 2/2 | Complete   | 2026-03-12 |
-| 2. Terminal Design System | 1/3 | In Progress|  |
-| 3. Security and Performance | 0/? | Not started | - |
+| 2. Terminal Design System | 3/3 | Complete   | 2026-03-13 |
+| 3. Security and Performance | 0/2 | Not started | - |
 | 4. Infrastructure and Deploy | 0/? | Not started | - |
