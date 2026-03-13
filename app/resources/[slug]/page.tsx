@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { ResourceDetailSkeleton } from "@/components/resource-skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -42,13 +43,7 @@ export default function ResourcePage({
         </div>
       </nav>
 
-      <Suspense
-        fallback={
-          <div className="flex-1 flex items-center justify-center py-20">
-            <p className="text-muted-foreground">Loading resource...</p>
-          </div>
-        }
-      >
+      <Suspense fallback={<ResourceDetailSkeleton />}>
         <ResourceDetail paramsPromise={params} />
       </Suspense>
     </main>

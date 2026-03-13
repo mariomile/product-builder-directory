@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { ResourceGrid } from "@/components/resource-grid";
 import { SearchBar } from "@/components/search-bar";
 import { Filters } from "@/components/filters";
+import { ResourceGridSkeleton } from "@/components/resource-skeleton";
 
 type SearchParams = {
   search?: string;
@@ -50,13 +51,7 @@ export default function Home({
         </section>
 
         {/* Results — Suspense boundary for data fetching */}
-        <Suspense
-          fallback={
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">Loading resources...</p>
-            </div>
-          }
-        >
+        <Suspense fallback={<ResourceGridSkeleton />}>
           <ResourceGridWrapper searchParamsPromise={searchParams} />
         </Suspense>
       </div>
