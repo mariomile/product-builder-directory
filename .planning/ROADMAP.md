@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Stabilize** - Pin dependencies, remove template boilerplate, resolve Radix conflicts (completed 2026-03-12)
 - [x] **Phase 2: Terminal Design System** - Full terminal aesthetic with Geist Mono, black/white/cyan palette, restyled components (completed 2026-03-13)
 - [x] **Phase 3: Security and Performance** - Sanitize search, lock down RLS and edge function, add pagination and debounce (completed 2026-03-13)
-- [ ] **Phase 4: Infrastructure and Deploy** - Create Supabase project, seed data, configure MCP, deploy to Vercel
+- [x] **Phase 4: Infrastructure and Deploy** - Create Supabase project, seed data, configure MCP, deploy to Vercel (completed 2026-03-13)
 
 ## Phase Details
 
@@ -79,7 +79,7 @@ Plans:
 
 Plans:
 - [ ] 04-01-PLAN.md — DB migrations: apply 003_rls_delete security policy, mark 002_seed as tracked (INFR-01)
-- [ ] 04-02-PLAN.md — Edge function + MCP: deploy sync-raindrop, configure cron + secrets, run 5 MCP verification queries (INFR-02, INFR-03)
+- [x] 04-02-PLAN.md — Edge function + MCP: deploy sync-raindrop, configure cron + secrets, run 5 MCP verification queries (INFR-02, INFR-03)
 - [ ] 04-03-PLAN.md — Vercel deploy: create project, set env vars, deploy to production, browser smoke test (INFR-04)
 
 ## Progress
@@ -92,4 +92,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Stabilize | 2/2 | Complete   | 2026-03-12 |
 | 2. Terminal Design System | 3/3 | Complete   | 2026-03-13 |
 | 3. Security and Performance | 2/2 | Complete   | 2026-03-13 |
-| 4. Infrastructure and Deploy | 2/3 | In Progress|  |
+| 4. Infrastructure and Deploy | 3/3 | Complete   | 2026-03-13 |
