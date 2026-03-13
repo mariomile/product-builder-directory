@@ -18,10 +18,10 @@
 - [x] **DSGN-01**: CSS variables redefined for terminal palette (black/white/cyan, --radius: 0rem)
 - [x] **DSGN-02**: Geist Mono font applied globally via layout.tsx and tailwind.config.ts
 - [x] **DSGN-03**: Dark mode forced as default, theme switcher removed
-- [ ] **DSGN-04**: Resource cards restyled as monochrome terminal listings (no rainbow badge colors)
-- [ ] **DSGN-05**: Search bar, filters, and detail page restyled with terminal aesthetic
+- [x] **DSGN-04**: Resource cards restyled as monochrome terminal listings (no rainbow badge colors)
+- [x] **DSGN-05**: Search bar, filters, and detail page restyled with terminal aesthetic
 - [ ] **DSGN-06**: Loading skeletons with terminal character replace text-only loading states
-- [ ] **DSGN-07**: Cmd+K keyboard shortcut focuses search input
+- [x] **DSGN-07**: Cmd+K keyboard shortcut focuses search input
 
 ### Performance
 
@@ -89,10 +89,10 @@
 | DSGN-01 | Phase 2 | Complete |
 | DSGN-02 | Phase 2 | Complete |
 | DSGN-03 | Phase 2 | Complete |
-| DSGN-04 | Phase 2 | Pending |
-| DSGN-05 | Phase 2 | Pending |
+| DSGN-04 | Phase 2 | Complete |
+| DSGN-05 | Phase 2 | Complete |
 | DSGN-06 | Phase 2 | Pending |
-| DSGN-07 | Phase 2 | Pending |
+| DSGN-07 | Phase 2 | Complete |
 | PERF-01 | Phase 3 | Pending |
 | PERF-02 | Phase 3 | Pending |
 | SECR-01 | Phase 3 | Pending |
