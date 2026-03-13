@@ -8,9 +8,9 @@
 ### Stability
 
 - [ ] **STAB-01**: Search input debounces 300ms before triggering server navigation
-- [ ] **STAB-02**: Error boundaries (error.tsx) exist at app/ and app/resources/[slug]/ with terminal-styled fallback
+- [x] **STAB-02**: Error boundaries (error.tsx) exist at app/ and app/resources/[slug]/ with terminal-styled fallback
 - [x] **STAB-03**: All dependencies pinned to exact versions (no "latest")
-- [ ] **STAB-04**: AI classification JSON from Claude is validated against expected schema before database insert
+- [x] **STAB-04**: AI classification JSON from Claude is validated against expected schema before database insert
 - [x] **STAB-05**: Unused Supabase auth template boilerplate removed (auth pages, protected routes, theme switcher)
 
 ### Design
@@ -20,7 +20,7 @@
 - [x] **DSGN-03**: Dark mode forced as default, theme switcher removed
 - [x] **DSGN-04**: Resource cards restyled as monochrome terminal listings (no rainbow badge colors)
 - [x] **DSGN-05**: Search bar, filters, and detail page restyled with terminal aesthetic
-- [ ] **DSGN-06**: Loading skeletons with terminal character replace text-only loading states
+- [x] **DSGN-06**: Loading skeletons with terminal character replace text-only loading states
 - [x] **DSGN-07**: Cmd+K keyboard shortcut focuses search input
 
 ### Performance
@@ -82,16 +82,16 @@
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | STAB-01 | Phase 3 | Pending |
-| STAB-02 | Phase 2 | Pending |
+| STAB-02 | Phase 2 | Complete |
 | STAB-03 | Phase 1 | Complete |
-| STAB-04 | Phase 2 | Pending |
+| STAB-04 | Phase 2 | Complete |
 | STAB-05 | Phase 1 | Complete |
 | DSGN-01 | Phase 2 | Complete |
 | DSGN-02 | Phase 2 | Complete |
 | DSGN-03 | Phase 2 | Complete |
 | DSGN-04 | Phase 2 | Complete |
 | DSGN-05 | Phase 2 | Complete |
-| DSGN-06 | Phase 2 | Pending |
+| DSGN-06 | Phase 2 | Complete |
 | DSGN-07 | Phase 2 | Complete |
 | PERF-01 | Phase 3 | Pending |
 | PERF-02 | Phase 3 | Pending |
