@@ -107,6 +107,15 @@ Respond with ONLY valid JSON, no other text:
 }
 
 Deno.serve(async (req) => {
+  // Reject requests without valid authorization
+  // SYNC_SECRET is set in Supabase Dashboard -> Edge Functions -> Secrets
+  // Phase 4 cron configuration must pass this header.
+  const authHeader = req.headers.get("Authorization");
+  const expectedToken = Deno.env.get("SYNC_SECRET");
+  if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   try {
     // Allow only POST or GET (for cron)
     if (req.method !== "POST" && req.method !== "GET") {
