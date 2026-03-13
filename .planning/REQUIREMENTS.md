@@ -15,9 +15,9 @@
 
 ### Design
 
-- [ ] **DSGN-01**: CSS variables redefined for terminal palette (black/white/cyan, --radius: 0rem)
-- [ ] **DSGN-02**: Geist Mono font applied globally via layout.tsx and tailwind.config.ts
-- [ ] **DSGN-03**: Dark mode forced as default, theme switcher removed
+- [x] **DSGN-01**: CSS variables redefined for terminal palette (black/white/cyan, --radius: 0rem)
+- [x] **DSGN-02**: Geist Mono font applied globally via layout.tsx and tailwind.config.ts
+- [x] **DSGN-03**: Dark mode forced as default, theme switcher removed
 - [ ] **DSGN-04**: Resource cards restyled as monochrome terminal listings (no rainbow badge colors)
 - [ ] **DSGN-05**: Search bar, filters, and detail page restyled with terminal aesthetic
 - [ ] **DSGN-06**: Loading skeletons with terminal character replace text-only loading states
@@ -44,7 +44,7 @@
 
 ### Code Quality
 
-- [ ] **QUAL-01**: Label maps (typeLabels, pillarLabels, typeColors) extracted to shared lib/constants.ts
+- [x] **QUAL-01**: Label maps (typeLabels, pillarLabels, typeColors) extracted to shared lib/constants.ts
 - [x] **QUAL-02**: Radix UI package conflicts resolved (meta-package vs individual packages)
 
 ## v2 Requirements
@@ -86,9 +86,9 @@
 | STAB-03 | Phase 1 | Complete |
 | STAB-04 | Phase 2 | Pending |
 | STAB-05 | Phase 1 | Complete |
-| DSGN-01 | Phase 2 | Pending |
-| DSGN-02 | Phase 2 | Pending |
-| DSGN-03 | Phase 2 | Pending |
+| DSGN-01 | Phase 2 | Complete |
+| DSGN-02 | Phase 2 | Complete |
+| DSGN-03 | Phase 2 | Complete |
 | DSGN-04 | Phase 2 | Pending |
 | DSGN-05 | Phase 2 | Pending |
 | DSGN-06 | Phase 2 | Pending |
@@ -103,7 +103,7 @@
 | INFR-02 | Phase 4 | Pending |
 | INFR-03 | Phase 4 | Pending |
 | INFR-04 | Phase 4 | Pending |
-| QUAL-01 | Phase 2 | Pending |
+| QUAL-01 | Phase 2 | Complete |
 | QUAL-02 | Phase 1 | Complete |
 
 **Coverage:**
