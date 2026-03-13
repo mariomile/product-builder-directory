@@ -75,10 +75,12 @@ Plans:
   2. Five MCP demo queries execute successfully against the live database and return correct results
   3. The Raindrop sync edge function runs on its cron schedule and successfully syncs a test bookmark through the full pipeline (Raindrop fetch, Claude enrichment, database insert)
   4. The Vercel deployment has all required environment variables configured and passes a smoke test of search, filter, and detail page navigation
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 04-01: TBD
+- [ ] 04-01-PLAN.md — DB migrations: apply 003_rls_delete security policy, mark 002_seed as tracked (INFR-01)
+- [ ] 04-02-PLAN.md — Edge function + MCP: deploy sync-raindrop, configure cron + secrets, run 5 MCP verification queries (INFR-02, INFR-03)
+- [ ] 04-03-PLAN.md — Vercel deploy: create project, set env vars, deploy to production, browser smoke test (INFR-04)
 
 ## Progress
 
@@ -90,4 +92,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Stabilize | 2/2 | Complete   | 2026-03-12 |
 | 2. Terminal Design System | 3/3 | Complete   | 2026-03-13 |
 | 3. Security and Performance | 2/2 | Complete   | 2026-03-13 |
-| 4. Infrastructure and Deploy | 0/? | Not started | - |
+| 4. Infrastructure and Deploy | 0/3 | Not started | - |
