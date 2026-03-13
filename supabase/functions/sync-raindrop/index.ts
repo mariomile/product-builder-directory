@@ -64,24 +64,29 @@ async function classifyWithGemini(
   excerpt: string,
   tags: string[]
 ): Promise<AIClassification> {
-  const prompt = `Classify this resource for a Product Builder Directory (PM + Design + Engineering with AI).
+  const prompt = `You are classifying a resource for a Product Builder Directory (for PMs, Designers, and Engineers building with AI).
 
 Resource: "${name}"
 URL: ${url}
 Description: ${excerpt}
 Tags: ${tags.join(", ")}
 
-Respond with ONLY valid JSON, no other text:
-{
-  "type": one of "tool"|"course"|"article"|"newsletter"|"book"|"podcast"|"video"|"community"|"x_post"|"framework",
-  "pillar": one of "discovery"|"design"|"delivery"|"strategy"|"stack"|"meta_skill",
-  "level": one of "beginner"|"intermediate"|"advanced",
-  "expert_take": "2-3 sentence expert opinion on why a product builder should care about this resource. Be specific and opinionated.",
-  "tags": ["3-5 relevant lowercase tags like claude-code, vibe-coding, user-research"]
-}`;
+Classify this resource and respond with ONLY a valid JSON object. No markdown, no explanation, just JSON.
+
+Rules:
+- type must be exactly one of: tool, course, article, newsletter, book, podcast, video, community, x_post, framework
+- pillar must be exactly one of: discovery, design, delivery, strategy, stack, meta_skill
+- level must be exactly one of: beginner, intermediate, advanced
+- expert_take: 2-3 sentences on why a product builder should care. Be specific and opinionated.
+- tags: array of 3-5 lowercase strings (e.g. ["claude-code", "vibe-coding", "user-research"])
+
+Example output:
+{"type":"tool","pillar":"delivery","level":"intermediate","expert_take":"This tool accelerates...","tags":["ai","productivity"]}
+
+Now classify the resource above:`;
 
   const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${GEMINI_API_KEY}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -111,6 +116,14 @@ Deno.serve(async (req) => {
   const expectedToken = Deno.env.get("SYNC_SECRET");
   if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
     return new Response("Unauthorized", { status: 401 });
+  }
+
+  // Diagnostica: ?action=list-models
+  const reqUrl = new URL(req.url);
+  if (reqUrl.searchParams.get("action") === "list-models") {
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${GEMINI_API_KEY}&pageSize=50`);
+    const data = await r.json();
+    return Response.json(data);
   }
 
   try {
