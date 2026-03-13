@@ -3,34 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useTransition } from "react";
-
-const TYPES = [
-  { value: "tool", label: "Tool" },
-  { value: "course", label: "Course" },
-  { value: "article", label: "Article" },
-  { value: "newsletter", label: "Newsletter" },
-  { value: "book", label: "Book" },
-  { value: "podcast", label: "Podcast" },
-  { value: "video", label: "Video" },
-  { value: "community", label: "Community" },
-  { value: "x_post", label: "X Post" },
-  { value: "framework", label: "Framework" },
-];
-
-const PILLARS = [
-  { value: "discovery", label: "Discovery" },
-  { value: "design", label: "Design" },
-  { value: "delivery", label: "Delivery" },
-  { value: "strategy", label: "Strategy" },
-  { value: "stack", label: "Stack & Tools" },
-  { value: "meta_skill", label: "Meta-skill" },
-];
-
-const LEVELS = [
-  { value: "beginner", label: "Beginner" },
-  { value: "intermediate", label: "Intermediate" },
-  { value: "advanced", label: "Advanced" },
-];
+import { TYPES, PILLARS, LEVELS } from "@/lib/constants";
 
 function FilterGroup({
   label,
