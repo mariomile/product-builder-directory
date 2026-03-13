@@ -43,11 +43,12 @@ Plans:
   3. Resource cards display as monochrome terminal listings with type/pillar labels pulled from a single shared constants file
   4. Triggering a server error or slow load shows a terminal-styled error boundary or skeleton, not a raw crash screen or blank page
   5. Pressing Cmd+K from any page focuses the search input
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md — Foundation: dark mode, terminal CSS palette, Geist Mono font, lib/constants.ts (DSGN-01, DSGN-02, DSGN-03, QUAL-01)
+- [ ] 02-02-PLAN.md — Component restyle: monochrome badges, sharp corners, Cmd+K, detail page de-rainbowed (DSGN-04, DSGN-05, DSGN-07)
+- [ ] 02-03-PLAN.md — Resilience: error boundaries, loading skeletons, lib/validators.ts (STAB-02, STAB-04, DSGN-06)
 
 ### Phase 3: Security and Performance
 **Goal**: The app is safe to expose publicly and handles real-world usage patterns -- sanitized inputs, protected endpoints, paginated results, responsive search
@@ -87,6 +88,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Stabilize | 2/2 | Complete   | 2026-03-12 |
-| 2. Terminal Design System | 0/? | Not started | - |
+| 2. Terminal Design System | 0/3 | Not started | - |
 | 3. Security and Performance | 0/? | Not started | - |
 | 4. Infrastructure and Deploy | 0/? | Not started | - |
