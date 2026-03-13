@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Resource } from "@/lib/queries";
@@ -6,7 +5,7 @@ import { TYPE_LABELS, PILLAR_LABELS, TYPE_BADGE_CLASSES } from "@/lib/constants"
 
 export function ResourceCard({ resource }: { resource: Resource }) {
   return (
-    <Link href={`/resources/${resource.slug}`}>
+    <a href={resource.url} target="_blank" rel="noreferrer">
       <Card className="h-full hover:border-primary transition-colors cursor-pointer border-border">
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2 flex-wrap mb-2">
@@ -62,6 +61,6 @@ export function ResourceCard({ resource }: { resource: Resource }) {
           </div>
         </CardContent>
       </Card>
-    </Link>
+    </a>
   );
 }

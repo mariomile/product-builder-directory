@@ -92,7 +92,7 @@ Now classify the resource above:`;
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { maxOutputTokens: 500, temperature: 0.1 },
+        generationConfig: { maxOutputTokens: 2048, temperature: 0.1, responseMimeType: "application/json" },
       }),
     }
   );
