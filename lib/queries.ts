@@ -21,6 +21,12 @@ export type Resource = {
   updated_at: string;
 };
 
+function sanitizeSearch(raw: string): string {
+  // Strip PostgREST operator chars: comma separates conditions,
+  // parens/dot are filter syntax, others are injection vectors
+  return raw.replace(/[,().%"'\\;|*]/g, "").trim().slice(0, 100);
+}
+
 export async function getResources(params: {
   search?: string;
   type?: string;
@@ -32,9 +38,12 @@ export async function getResources(params: {
   let query = supabase.from("resources").select("*");
 
   if (params.search) {
-    query = query.or(
-      `name.ilike.%${params.search}%,description.ilike.%${params.search}%,expert_take.ilike.%${params.search}%`
-    );
+    const safe = sanitizeSearch(params.search);
+    if (safe) {
+      query = query.or(
+        `name.ilike.%${safe}%,description.ilike.%${safe}%,expert_take.ilike.%${safe}%`
+      );
+    }
   }
   if (params.type) query = query.eq("type", params.type);
   if (params.pillar) query = query.eq("pillar", params.pillar);
