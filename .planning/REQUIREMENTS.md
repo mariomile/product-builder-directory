@@ -30,10 +30,10 @@
 
 ### Security
 
-- [ ] **SECR-01**: Search query sanitized to prevent PostgREST filter injection
-- [ ] **SECR-02**: RLS DELETE policy added to resources table
-- [ ] **SECR-03**: Raindrop sync edge function requires authorization header
-- [ ] **SECR-04**: Required environment variables validated at startup with clear error messages
+- [x] **SECR-01**: Search query sanitized to prevent PostgREST filter injection
+- [x] **SECR-02**: RLS DELETE policy added to resources table
+- [x] **SECR-03**: Raindrop sync edge function requires authorization header
+- [x] **SECR-04**: Required environment variables validated at startup with clear error messages
 
 ### Infrastructure
 
@@ -95,10 +95,10 @@
 | DSGN-07 | Phase 2 | Complete |
 | PERF-01 | Phase 3 | Pending |
 | PERF-02 | Phase 3 | Pending |
-| SECR-01 | Phase 3 | Pending |
-| SECR-02 | Phase 3 | Pending |
-| SECR-03 | Phase 3 | Pending |
-| SECR-04 | Phase 3 | Pending |
+| SECR-01 | Phase 3 | Complete |
+| SECR-02 | Phase 3 | Complete |
+| SECR-03 | Phase 3 | Complete |
+| SECR-04 | Phase 3 | Complete |
 | INFR-01 | Phase 4 | Pending |
 | INFR-02 | Phase 4 | Pending |
 | INFR-03 | Phase 4 | Pending |
