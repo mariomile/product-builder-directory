@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-03-13T13:57:10.069Z"
+stopped_at: Completed 03-02-PLAN.md
+last_updated: "2026-03-13T14:05:19.313Z"
 last_activity: 2026-03-13 -- Completed Phase 02 terminal design system (all 3 plans verified)
 progress:
   total_phases: 4
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 7
-  completed_plans: 6
+  completed_plans: 7
   percent: 50
 ---
 
@@ -56,6 +56,7 @@ Progress: [█████░░░░░] 50%
 | Phase 02-terminal-design-system P02 | 2 min | 2 tasks | 8 files |
 | Phase 02-terminal-design-system P03 | 2 min | 2 tasks | 6 files |
 | Phase 03-security-and-performance P01 | 2 | 3 tasks | 4 files |
+| Phase 03-security-and-performance P02 | 7 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,9 @@ Recent decisions affecting current work:
 - [Phase 03-security-and-performance]: sanitizeSearch unexported, no API surface change for getResources callers
 - [Phase 03-security-and-performance]: sync-raindrop auth check before try block — missing SYNC_SECRET returns 401 not 500
 - [Phase 03-security-and-performance]: instrumentation.ts dependency-free — plain Array.filter, no Zod or envalid
+- [Phase 03-security-and-performance]: PaginationBar hides itself when totalPages <= 1, page=1 omitted from URL for clean URLs
+- [Phase 03-security-and-performance]: filteredCount replaces getResourceCount() in ResourceGrid — count is now filter-scoped, not total
+- [Phase 03-security-and-performance]: Page reset pattern: all router.push handlers call params.delete('page') before navigating
 
 ### Pending Todos
 
@@ -93,6 +97,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-13T13:57:10.067Z
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-03-13T14:05:13.550Z
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None

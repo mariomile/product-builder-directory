@@ -7,7 +7,7 @@
 
 ### Stability
 
-- [ ] **STAB-01**: Search input debounces 300ms before triggering server navigation
+- [x] **STAB-01**: Search input debounces 300ms before triggering server navigation
 - [x] **STAB-02**: Error boundaries (error.tsx) exist at app/ and app/resources/[slug]/ with terminal-styled fallback
 - [x] **STAB-03**: All dependencies pinned to exact versions (no "latest")
 - [x] **STAB-04**: AI classification JSON from Claude is validated against expected schema before database insert
@@ -25,8 +25,8 @@
 
 ### Performance
 
-- [ ] **PERF-01**: Resources paginated at 20 items per page with cursor-based navigation
-- [ ] **PERF-02**: Filtered result count displayed to user (not just total count)
+- [x] **PERF-01**: Resources paginated at 20 items per page with cursor-based navigation
+- [x] **PERF-02**: Filtered result count displayed to user (not just total count)
 
 ### Security
 
@@ -81,7 +81,7 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| STAB-01 | Phase 3 | Pending |
+| STAB-01 | Phase 3 | Complete |
 | STAB-02 | Phase 2 | Complete |
 | STAB-03 | Phase 1 | Complete |
 | STAB-04 | Phase 2 | Complete |
@@ -93,8 +93,8 @@
 | DSGN-05 | Phase 2 | Complete |
 | DSGN-06 | Phase 2 | Complete |
 | DSGN-07 | Phase 2 | Complete |
-| PERF-01 | Phase 3 | Pending |
-| PERF-02 | Phase 3 | Pending |
+| PERF-01 | Phase 3 | Complete |
+| PERF-02 | Phase 3 | Complete |
 | SECR-01 | Phase 3 | Complete |
 | SECR-02 | Phase 3 | Complete |
 | SECR-03 | Phase 3 | Complete |
