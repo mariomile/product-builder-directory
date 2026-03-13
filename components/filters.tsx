@@ -22,6 +22,7 @@ function FilterGroup({
   const handleFilter = useCallback(
     (value: string) => {
       const params = new URLSearchParams(searchParams.toString());
+      params.delete("page"); // Reset to page 1 on any filter change
       if (activeValue === value) {
         params.delete(paramKey);
       } else {

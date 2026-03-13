@@ -21,17 +21,23 @@ export function SearchBar() {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const handleSearch = useCallback(
     (value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (value) {
-        params.set("search", value);
-      } else {
-        params.delete("search");
-      }
-      startTransition(() => {
-        router.push(`/?${params.toString()}`);
-      });
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.delete("page"); // Reset to page 1 on search change
+        if (value) {
+          params.set("search", value);
+        } else {
+          params.delete("search");
+        }
+        startTransition(() => {
+          router.push(`/?${params.toString()}`);
+        });
+      }, 300);
     },
     [router, searchParams]
   );

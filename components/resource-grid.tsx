@@ -1,5 +1,6 @@
-import { getResources, getResourceCount } from "@/lib/queries";
+import { getResources } from "@/lib/queries";
 import { ResourceCard } from "@/components/resource-card";
+import { PaginationBar } from "@/components/pagination-bar";
 
 export async function ResourceGrid({
   searchParams,
@@ -10,19 +11,20 @@ export async function ResourceGrid({
     pillar?: string;
     level?: string;
     free?: string;
+    page?: string;
   };
 }) {
-  const [resources, count] = await Promise.all([
-    getResources(searchParams),
-    getResourceCount(),
-  ]);
+  const { data: resources, filteredCount, totalPages, currentPage } =
+    await getResources(searchParams);
 
-  const hasFilters = Object.values(searchParams).some(Boolean);
+  const hasFilters = Object.entries(searchParams)
+    .filter(([k]) => k !== "page")
+    .some(([, v]) => Boolean(v));
 
   return (
     <>
       <p className="text-sm text-muted-foreground">
-        {count} resources curated for builders
+        {filteredCount} result{filteredCount !== 1 ? "s" : ""}
       </p>
 
       <section>
@@ -34,7 +36,7 @@ export async function ResourceGrid({
           </div>
         ) : (
           <>
-            {!hasFilters && (
+            {!hasFilters && currentPage === 1 && (
               <>
                 <h2 className="text-xl font-semibold mb-4">Featured</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
@@ -49,19 +51,17 @@ export async function ResourceGrid({
               </>
             )}
 
-            {hasFilters && (
-              <h2 className="text-xl font-semibold mb-4">
-                {resources.length} result{resources.length !== 1 ? "s" : ""}
-              </h2>
-            )}
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {(hasFilters
+              {(hasFilters || currentPage > 1
                 ? resources
                 : resources.filter((r) => !r.is_featured)
               ).map((resource) => (
                 <ResourceCard key={resource.id} resource={resource} />
               ))}
+            </div>
+
+            <div className="mt-6">
+              <PaginationBar currentPage={currentPage} totalPages={totalPages} />
             </div>
           </>
         )}
