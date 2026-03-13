@@ -10,6 +10,7 @@ type SearchParams = {
   pillar?: string;
   level?: string;
   free?: string;
+  page?: string;
 };
 
 export default function Home({
