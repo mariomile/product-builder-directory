@@ -1,10 +1,10 @@
 // Raindrop Sync Edge Function
 // Fetches bookmarks tagged "builder-dir" from Raindrop.io,
-// enriches them with AI (Claude), and inserts into resources table.
+// enriches them with AI (Gemini), and inserts into resources table.
 //
 // Required secrets (set via Supabase Dashboard → Edge Functions → Secrets):
 // - RAINDROP_TOKEN
-// - ANTHROPIC_API_KEY
+// - GEMINI_API_KEY
 // - SUPABASE_URL
 // - SUPABASE_SERVICE_ROLE_KEY
 //
@@ -15,7 +15,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const RAINDROP_TOKEN = Deno.env.get("RAINDROP_TOKEN")!;
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY")!;
+const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY")!;
 
 const RAINDROP_TAG = "builder-dir";
 
@@ -58,26 +58,13 @@ async function fetchRaindropBookmarks(): Promise<RaindropItem[]> {
   return data.items || [];
 }
 
-async function classifyWithClaude(
+async function classifyWithGemini(
   name: string,
   url: string,
   excerpt: string,
   tags: string[]
 ): Promise<AIClassification> {
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": ANTHROPIC_API_KEY,
-      "anthropic-version": "2023-06-01",
-    },
-    body: JSON.stringify({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 500,
-      messages: [
-        {
-          role: "user",
-          content: `Classify this resource for a Product Builder Directory (PM + Design + Engineering with AI).
+  const prompt = `Classify this resource for a Product Builder Directory (PM + Design + Engineering with AI).
 
 Resource: "${name}"
 URL: ${url}
@@ -91,19 +78,29 @@ Respond with ONLY valid JSON, no other text:
   "level": one of "beginner"|"intermediate"|"advanced",
   "expert_take": "2-3 sentence expert opinion on why a product builder should care about this resource. Be specific and opinionated.",
   "tags": ["3-5 relevant lowercase tags like claude-code, vibe-coding, user-research"]
-}`,
-        },
-      ],
-    }),
-  });
+}`;
+
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { maxOutputTokens: 500, temperature: 0.1 },
+      }),
+    }
+  );
 
   if (!res.ok) {
-    throw new Error(`Claude API error: ${res.status} ${await res.text()}`);
+    throw new Error(`Gemini API error: ${res.status} ${await res.text()}`);
   }
 
   const data = await res.json();
-  const text = data.content[0].text;
-  return JSON.parse(text);
+  const text = data.candidates[0].content.parts[0].text.trim();
+  // Strip markdown code fences if present
+  const json = text.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
+  return JSON.parse(json);
 }
 
 Deno.serve(async (req) => {
@@ -156,7 +153,7 @@ Deno.serve(async (req) => {
     const results = [];
     for (const bookmark of newBookmarks) {
       try {
-        const classification = await classifyWithClaude(
+        const classification = await classifyWithGemini(
           bookmark.title,
           bookmark.link,
           bookmark.excerpt,
