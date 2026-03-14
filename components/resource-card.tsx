@@ -1,17 +1,25 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Resource } from "@/lib/queries";
 import { TYPE_LABELS, PILLAR_LABELS } from "@/lib/constants";
+import { ArrowUpRight } from "lucide-react";
 
-export function ResourceCard({ resource }: { resource: Resource }) {
-  const isFeatured = resource.is_featured;
-
+export function ResourceCard({
+  resource,
+  index = 0,
+}: {
+  resource: Resource;
+  index?: number;
+}) {
   return (
-    <a href={resource.url} target="_blank" rel="noreferrer" className="h-full block">
-      <Card
-        className={`h-full cursor-pointer transition-colors border-border hover:border-primary flex flex-col ${
-          isFeatured ? "border-t-2 border-t-primary" : ""
-        }`}
-      >
+    <a
+      href={resource.url}
+      target="_blank"
+      rel="noreferrer"
+      data-card-index={index}
+      className="h-full block group animate-stagger"
+      style={{ "--i": index } as React.CSSProperties}
+    >
+      <Card className="h-full cursor-pointer border-border hover:border-primary flex flex-col transition-[border-color,transform] duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0">
         <CardHeader className="pb-3 flex-1">
           {/* Meta row */}
           <div className="flex items-center justify-between gap-2 mb-3">
@@ -27,24 +35,19 @@ export function ResourceCard({ resource }: { resource: Resource }) {
             </span>
           </div>
 
-          {/* Name */}
-          <CardTitle
-            className={`leading-tight ${
-              isFeatured ? "text-2xl" : "text-xl"
-            }`}
-          >
-            {resource.name}
-          </CardTitle>
+          {/* Name + external arrow */}
+          <div className="flex items-start gap-2">
+            <CardTitle className="leading-tight flex-1 text-xl">
+              {resource.name}
+            </CardTitle>
+            <ArrowUpRight className="h-3.5 w-3.5 flex-shrink-0 mt-1 text-muted-foreground opacity-0 -translate-x-1 transition-all duration-150 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-primary" />
+          </div>
         </CardHeader>
 
         <CardContent className="pt-0">
           {/* Expert take */}
           {resource.expert_take && (
-            <p
-              className={`text-sm text-muted-foreground mb-3 ${
-                isFeatured ? "" : "line-clamp-2"
-              }`}
-            >
+            <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
               {resource.expert_take}
             </p>
           )}

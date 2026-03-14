@@ -1,15 +1,7 @@
 import { getResources } from "@/lib/queries";
 import { ResourceCard } from "@/components/resource-card";
 import { PaginationBar } from "@/components/pagination-bar";
-
-function SectionHeader({ label }: { label: string }) {
-  return (
-    <div className="flex items-center gap-4 mb-5">
-      <span className="text-xs font-mono text-muted-foreground flex-shrink-0">{label}</span>
-      <div className="flex-1 border-t border-border" />
-    </div>
-  );
-}
+import { KeyboardNav } from "@/components/keyboard-nav";
 
 export async function ResourceGrid({
   searchParams,
@@ -26,9 +18,7 @@ export async function ResourceGrid({
   const { data: resources, filteredCount, totalPages, currentPage } =
     await getResources(searchParams);
 
-  const hasFilters = Object.entries(searchParams)
-    .filter(([k]) => k !== "page")
-    .some(([, v]) => Boolean(v));
+  const paramsKey = JSON.stringify(searchParams);
 
   return (
     <>
@@ -36,43 +26,28 @@ export async function ResourceGrid({
         // {filteredCount} resource{filteredCount !== 1 ? "s" : ""} found
       </p>
 
-      <section>
+      <section className="scanline-wrap" key={paramsKey}>
         {resources.length === 0 ? (
-          <div className="py-16 border border-border">
-            <p className="text-center text-muted-foreground font-mono text-sm">
+          <div className="py-16 border border-border flex flex-col items-center gap-2 animate-fade-up">
+            <p className="text-muted-foreground font-mono text-sm cursor-blink">
               // no resources matched your query
+            </p>
+            <p className="text-muted-foreground/60 font-mono text-xs">
+              // try broadening your filters or press ⌘K to explore
             </p>
           </div>
         ) : (
-          <>
-            {!hasFilters && currentPage === 1 && (
-              <>
-                <SectionHeader label="// featured" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 animate-fade-up">
-                  {resources
-                    .filter((r) => r.is_featured)
-                    .slice(0, 6)
-                    .map((resource) => (
-                      <ResourceCard key={resource.id} resource={resource} />
-                    ))}
-                </div>
-                <SectionHeader label="// all resources" />
-              </>
-            )}
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-fade-up">
-              {(hasFilters || currentPage > 1
-                ? resources
-                : resources.filter((r) => !r.is_featured)
-              ).map((resource) => (
-                <ResourceCard key={resource.id} resource={resource} />
+          <KeyboardNav>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {resources.map((resource, i) => (
+                <ResourceCard key={resource.id} resource={resource} index={i} />
               ))}
             </div>
 
             <div className="mt-8">
               <PaginationBar currentPage={currentPage} totalPages={totalPages} />
             </div>
-          </>
+          </KeyboardNav>
         )}
       </section>
     </>

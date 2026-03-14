@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
+import { CommandPalette } from "@/components/command-palette";
+import { ConsoleGreeting } from "@/components/console-greeting";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -28,6 +30,8 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${geistMono.variable} font-mono antialiased`}>
         {children}
+        <CommandPalette />
+        <ConsoleGreeting />
       </body>
     </html>
   );

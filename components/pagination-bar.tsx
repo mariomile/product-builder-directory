@@ -25,24 +25,36 @@ export function PaginationBar({
 
   if (totalPages <= 1) return null;
 
+  const barLength = Math.min(totalPages, 10);
+  const filled = Math.round((currentPage / totalPages) * barLength);
+  const empty = barLength - filled;
+
   return (
-    <div className="flex items-center gap-4 text-sm text-muted-foreground font-mono">
+    <div className="flex items-center gap-3 text-xs text-muted-foreground font-mono">
       <button
         onClick={() => navigate(currentPage - 1)}
         disabled={currentPage <= 1 || isPending}
         className="disabled:opacity-30 hover:text-foreground transition-colors"
       >
-        &lt; prev
+        [&lt;]
       </button>
-      <span>
-        {currentPage} / {totalPages}
+      <span className="flex items-center">
+        [
+        <span className={`text-primary ${isPending ? "cursor-blink" : ""}`}>
+          {"█".repeat(Math.max(filled, 1))}
+        </span>
+        <span className="text-muted-foreground/30">
+          {"░".repeat(Math.max(empty, 0))}
+        </span>
+        ]{" "}
+        {currentPage}/{totalPages}
       </span>
       <button
         onClick={() => navigate(currentPage + 1)}
         disabled={currentPage >= totalPages || isPending}
         className="disabled:opacity-30 hover:text-foreground transition-colors"
       >
-        next &gt;
+        [&gt;]
       </button>
     </div>
   );

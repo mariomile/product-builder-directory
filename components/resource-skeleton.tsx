@@ -1,14 +1,13 @@
-export function ResourceCardSkeleton() {
+export function ResourceCardSkeleton({ index = 0 }: { index?: number }) {
   return (
-    <div className="border border-border p-4 font-mono">
-      <div className="h-3 w-16 bg-muted animate-pulse mb-3" />
-      <div className="h-4 w-3/4 bg-muted animate-pulse mb-2" />
-      <div className="h-3 w-full bg-muted animate-pulse mb-1" />
-      <div className="h-3 w-5/6 bg-muted animate-pulse mb-4" />
-      <div className="flex gap-1">
-        <div className="h-3 w-12 bg-muted animate-pulse" />
-        <div className="h-3 w-12 bg-muted animate-pulse" />
-      </div>
+    <div
+      className="border border-border p-4 font-mono text-xs text-muted-foreground animate-stagger"
+      style={{ "--i": index } as React.CSSProperties}
+    >
+      <span className="text-primary">{">"}</span>
+      <span className="ml-2 skeleton-cursor">
+        {index === 0 ? "loading" : ""}
+      </span>
     </div>
   );
 }
@@ -17,7 +16,7 @@ export function ResourceGridSkeleton() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {Array.from({ length: 6 }).map((_, i) => (
-        <ResourceCardSkeleton key={i} />
+        <ResourceCardSkeleton key={i} index={i} />
       ))}
     </div>
   );
