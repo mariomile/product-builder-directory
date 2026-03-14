@@ -8,9 +8,9 @@ export async function ResourceGrid({
 }: {
   searchParams: {
     search?: string;
-    type?: string;
-    pillar?: string;
-    level?: string;
+    type?: string | string[];
+    pillar?: string | string[];
+    level?: string | string[];
     free?: string;
     page?: string;
   };

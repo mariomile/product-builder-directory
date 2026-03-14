@@ -9,9 +9,9 @@ import { Typewriter } from "@/components/typewriter";
 
 type SearchParams = {
   search?: string;
-  type?: string;
-  pillar?: string;
-  level?: string;
+  type?: string | string[];
+  pillar?: string | string[];
+  level?: string | string[];
   free?: string;
   page?: string;
 };
