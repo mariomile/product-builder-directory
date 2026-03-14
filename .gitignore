@@ -43,3 +43,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# superset worktree management
+.superset/
+
+# superpowers brainstorm artifacts
+.superpowers/
