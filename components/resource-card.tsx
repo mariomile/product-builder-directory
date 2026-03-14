@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Resource } from "@/lib/queries";
 import { TYPE_LABELS, PILLAR_LABELS } from "@/lib/constants";
 import { ArrowUpRight } from "lucide-react";
+import { FilterLink } from "@/components/filter-link";
 
 export function ResourceCard({
   resource,
@@ -23,8 +24,14 @@ export function ResourceCard({
         <CardHeader className="pb-3 flex-1">
           {/* Meta row */}
           <div className="flex items-center justify-between gap-2 mb-3">
-            <span className="text-xs font-mono text-muted-foreground">
-              [{TYPE_LABELS[resource.type] || resource.type} → {PILLAR_LABELS[resource.pillar] || resource.pillar}]
+            <span className="text-xs font-mono text-muted-foreground flex items-center gap-0.5">
+              [<FilterLink paramKey="type" value={resource.type}>
+                {TYPE_LABELS[resource.type] || resource.type}
+              </FilterLink>
+              {" → "}
+              <FilterLink paramKey="pillar" value={resource.pillar}>
+                {PILLAR_LABELS[resource.pillar] || resource.pillar}
+              </FilterLink>]
             </span>
             <span
               className={`text-xs font-mono flex-shrink-0 ${

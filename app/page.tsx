@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { ResourceGrid } from "@/components/resource-grid";
 import { SearchBar } from "@/components/search-bar";
 import { Filters } from "@/components/filters";
+import { FilterChips } from "@/components/filter-chips";
 import { ResourceGridSkeleton } from "@/components/resource-skeleton";
 import { getResourceCount } from "@/lib/queries";
 import { CmdKHint } from "@/components/cmdk-hint";
@@ -86,6 +87,9 @@ export default function Home({
           </Suspense>
           <Suspense>
             <Filters />
+          </Suspense>
+          <Suspense>
+            <FilterChips />
           </Suspense>
         </section>
 

@@ -1,0 +1,98 @@
+<h2>How should the filter dialog work?</h2>
+<p class="subtitle">You select filters inside, then click Apply. Which interaction style fits best?</p>
+
+<div class="cards" style="gap: 24px; margin-top: 24px;">
+
+  <!-- Option A: Checkboxes -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)" style="cursor:pointer;">
+    <div class="card-body" style="padding:0;">
+      <div class="mockup" style="margin:0;border:none;">
+        <div class="mockup-header">Option A — Toggle badges (current style, but staged)</div>
+        <div class="mockup-body" style="background:#050505;font-family:monospace;font-size:11px;padding:16px;">
+          <div style="color:#555;margin-bottom:12px;">// select filters</div>
+
+          <div style="margin-bottom:14px;">
+            <div style="color:#888;font-size:10px;margin-bottom:6px;">--type</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="border:1px solid #0ff;color:#0ff;padding:2px 8px;">tool</span>
+              <span style="border:1px solid #333;color:#555;padding:2px 8px;">course</span>
+              <span style="border:1px solid #333;color:#555;padding:2px 8px;">article</span>
+              <span style="border:1px solid #333;color:#555;padding:2px 8px;">newsletter</span>
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <div style="color:#888;font-size:10px;margin-bottom:6px;">--pillar</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="border:1px solid #333;color:#555;padding:2px 8px;">discovery</span>
+              <span style="border:1px solid #0ff;color:#0ff;padding:2px 8px;">design</span>
+              <span style="border:1px solid #333;color:#555;padding:2px 8px;">delivery</span>
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <div style="color:#888;font-size:10px;margin-bottom:6px;">--level</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="border:1px solid #333;color:#555;padding:2px 8px;">beginner</span>
+              <span style="border:1px solid #333;color:#555;padding:2px 8px;">intermediate</span>
+              <span style="border:1px solid #333;color:#555;padding:2px 8px;">advanced</span>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid #1a1a1a;padding-top:12px;display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:#444;font-size:10px;cursor:pointer;">clear all</span>
+            <button style="background:#0ff;color:#000;border:none;padding:4px 16px;font-family:monospace;font-size:11px;font-weight:bold;cursor:pointer;">[apply filters]</button>
+          </div>
+        </div>
+      </div>
+      <h3 style="padding:12px 16px 4px;margin:0;">Toggle badges</h3>
+      <p style="padding:0 16px 12px;margin:0;color:#888;font-size:13px;">Click to highlight, click again to deselect. Cyan = selected. Apply button commits. Consistent with existing design.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Live count on apply button -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)" style="cursor:pointer;">
+    <div class="card-body" style="padding:0;">
+      <div class="mockup" style="margin:0;border:none;">
+        <div class="mockup-header">Option B — Live result count on Apply button</div>
+        <div class="mockup-body" style="background:#050505;font-family:monospace;font-size:11px;padding:16px;">
+          <div style="color:#555;margin-bottom:12px;">// select filters</div>
+
+          <div style="margin-bottom:14px;">
+            <div style="color:#888;font-size:10px;margin-bottom:6px;">--type</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="border:1px solid #0ff;color:#0ff;padding:2px 8px;">tool</span>
+              <span style="border:1px solid #333;color:#555;padding:2px 8px;">course</span>
+              <span style="border:1px solid #333;color:#555;padding:2px 8px;">article</span>
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <div style="color:#888;font-size:10px;margin-bottom:6px;">--pillar</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="border:1px solid #333;color:#555;padding:2px 8px;">discovery</span>
+              <span style="border:1px solid #0ff;color:#0ff;padding:2px 8px;">design</span>
+              <span style="border:1px solid #333;color:#555;padding:2px 8px;">delivery</span>
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <div style="color:#888;font-size:10px;margin-bottom:6px;">--level</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="border:1px solid #333;color:#555;padding:2px 8px;">beginner</span>
+              <span style="border:1px solid #0ff;color:#0ff;padding:2px 8px;">intermediate</span>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid #1a1a1a;padding-top:12px;display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:#444;font-size:10px;cursor:pointer;">clear all</span>
+            <button style="background:#0ff;color:#000;border:none;padding:4px 16px;font-family:monospace;font-size:11px;font-weight:bold;cursor:pointer;">[apply — 8 results]</button>
+          </div>
+        </div>
+      </div>
+      <h3 style="padding:12px 16px 4px;margin:0;">Live count on Apply</h3>
+      <p style="padding:0 16px 12px;margin:0;color:#888;font-size:13px;">The Apply button shows a live result count as you pick options (requires extra query). More informative but heavier.</p>
+    </div>
+  </div>
+
+</div>

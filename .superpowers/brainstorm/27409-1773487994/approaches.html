@@ -1,0 +1,144 @@
+<h2>How should multi-select work inside the filter dialog?</h2>
+<p class="subtitle">All 3 keep the terminal aesthetic. Pick the interaction model that feels right.</p>
+
+<div class="options" style="gap: 24px;">
+
+  <!-- OPTION A: Toggle Badges -->
+  <div class="option" data-choice="a" onclick="toggleSelect(this)" style="flex:1; min-width: 280px;">
+    <div class="letter">A</div>
+    <div class="content" style="width:100%">
+      <h3>Toggle Badges (current pattern, extended)</h3>
+      <p style="margin-bottom:12px">Badges work the same as today — but clicking multiple ones adds them all to the filter. Cyan = selected. Click again to remove.</p>
+
+      <div style="font-family:monospace; background:#0a0a0a; border:1px solid #333; padding:16px; font-size:11px; color:#e5e5e5;">
+        <div style="color:#888; margin-bottom:10px">// filter resources ──────────────────</div>
+
+        <div style="margin-bottom:10px">
+          <div style="color:#888; font-size:10px; margin-bottom:6px">--type</div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px;">
+            <span style="border:1px solid #00ffff; color:#00ffff; padding:2px 8px; font-size:10px">tool ✓</span>
+            <span style="border:1px solid #00ffff; color:#00ffff; padding:2px 8px; font-size:10px">course ✓</span>
+            <span style="border:1px solid #555; color:#555; padding:2px 8px; font-size:10px">article</span>
+            <span style="border:1px solid #555; color:#555; padding:2px 8px; font-size:10px">newsletter</span>
+            <span style="border:1px solid #555; color:#555; padding:2px 8px; font-size:10px">book</span>
+            <span style="border:1px solid #555; color:#555; padding:2px 8px; font-size:10px">video</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+          <div style="color:#888; font-size:10px; margin-bottom:6px">--pillar</div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px;">
+            <span style="border:1px solid #00ffff; color:#00ffff; padding:2px 8px; font-size:10px">delivery ✓</span>
+            <span style="border:1px solid #555; color:#555; padding:2px 8px; font-size:10px">design</span>
+            <span style="border:1px solid #555; color:#555; padding:2px 8px; font-size:10px">strategy</span>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:8px; margin-top:14px; border-top:1px solid #222; padding-top:12px">
+          <span style="color:#888; font-size:10px">[clear filters]</span>
+          <span style="margin-left:auto; background:#00ffff; color:#000; padding:2px 10px; font-size:10px">[apply (3)]</span>
+        </div>
+      </div>
+
+      <div class="pros-cons" style="margin-top:12px">
+        <div class="pros"><h4>Pros</h4><ul><li>Familiar — evolves current UX</li><li>Scannable at a glance</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>No visual count per category</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION B: Checkbox rows -->
+  <div class="option" data-choice="b" onclick="toggleSelect(this)" style="flex:1; min-width: 280px;">
+    <div class="letter">B</div>
+    <div class="content" style="width:100%">
+      <h3>Checkbox Rows</h3>
+      <p style="margin-bottom:12px">Replace badges with checkbox rows. More conventional multi-select. Clearly communicates "pick many."</p>
+
+      <div style="font-family:monospace; background:#0a0a0a; border:1px solid #333; padding:16px; font-size:11px; color:#e5e5e5;">
+        <div style="color:#888; margin-bottom:10px">// filter resources ──────────────────</div>
+
+        <div style="margin-bottom:10px">
+          <div style="color:#888; font-size:10px; margin-bottom:6px">--type (2 selected)</div>
+          <div style="display:flex; flex-direction:column; gap:4px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer">
+              <span style="width:12px;height:12px;border:1px solid #00ffff;background:#00ffff;display:inline-block;flex-shrink:0"></span>
+              <span style="color:#e5e5e5">tool</span>
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer">
+              <span style="width:12px;height:12px;border:1px solid #00ffff;background:#00ffff;display:inline-block;flex-shrink:0"></span>
+              <span style="color:#e5e5e5">course</span>
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer">
+              <span style="width:12px;height:12px;border:1px solid #555;display:inline-block;flex-shrink:0"></span>
+              <span style="color:#555">article</span>
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer">
+              <span style="width:12px;height:12px;border:1px solid #555;display:inline-block;flex-shrink:0"></span>
+              <span style="color:#555">newsletter</span>
+            </label>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:8px; margin-top:14px; border-top:1px solid #222; padding-top:12px">
+          <span style="color:#888; font-size:10px">[clear filters]</span>
+          <span style="margin-left:auto; background:#00ffff; color:#000; padding:2px 10px; font-size:10px">[apply (2)]</span>
+        </div>
+      </div>
+
+      <div class="pros-cons" style="margin-top:12px">
+        <div class="pros"><h4>Pros</h4><ul><li>Universally understood</li><li>Works well for long lists</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Breaks terminal aesthetic</li><li>Heavier, form-like feel</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION C: Grouped badge columns with counts -->
+  <div class="option" data-choice="c" onclick="toggleSelect(this)" style="flex:1; min-width: 280px;">
+    <div class="letter">C</div>
+    <div class="content" style="width:100%">
+      <h3>Badge grid with live count header</h3>
+      <p style="margin-bottom:12px">Same toggle badges as Option A, but the group header shows a live count badge — e.g. <code>--type [2]</code> — making the multi-select intent obvious.</p>
+
+      <div style="font-family:monospace; background:#0a0a0a; border:1px solid #333; padding:16px; font-size:11px; color:#e5e5e5;">
+        <div style="color:#888; margin-bottom:10px">// filter resources ──────────────────</div>
+
+        <div style="margin-bottom:10px">
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px">
+            <span style="color:#888; font-size:10px">--type</span>
+            <span style="background:#00ffff; color:#000; font-size:9px; padding:0 5px">[2]</span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px;">
+            <span style="border:1px solid #00ffff; color:#00ffff; padding:2px 8px; font-size:10px">tool ✓</span>
+            <span style="border:1px solid #00ffff; color:#00ffff; padding:2px 8px; font-size:10px">course ✓</span>
+            <span style="border:1px solid #555; color:#555; padding:2px 8px; font-size:10px">article</span>
+            <span style="border:1px solid #555; color:#555; padding:2px 8px; font-size:10px">newsletter</span>
+            <span style="border:1px solid #555; color:#555; padding:2px 8px; font-size:10px">book</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px">
+            <span style="color:#888; font-size:10px">--pillar</span>
+            <span style="background:#333; color:#888; font-size:9px; padding:0 5px">[0]</span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px;">
+            <span style="border:1px solid #555; color:#555; padding:2px 8px; font-size:10px">design</span>
+            <span style="border:1px solid #555; color:#555; padding:2px 8px; font-size:10px">delivery</span>
+            <span style="border:1px solid #555; color:#555; padding:2px 8px; font-size:10px">strategy</span>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:8px; margin-top:14px; border-top:1px solid #222; padding-top:12px">
+          <span style="color:#888; font-size:10px">[clear filters]</span>
+          <span style="margin-left:auto; background:#00ffff; color:#000; padding:2px 10px; font-size:10px">[apply (2)]</span>
+        </div>
+      </div>
+
+      <div class="pros-cons" style="margin-top:12px">
+        <div class="pros"><h4>Pros</h4><ul><li>Badge pattern preserved</li><li>Count header makes multi-select obvious</li><li>Best balance of terminal feel + clarity</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Slightly more complex to implement</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>
