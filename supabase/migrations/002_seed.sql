@@ -1,5 +1,7 @@
 -- Product Builder Directory — Seed Data
 -- 20 real resources across all types and pillars
+-- Applied manually. Tracked retroactively in supabase_migrations.schema_migrations
+-- as version 20240101000002 on 2026-03-13. DO NOT re-run (would fail on slug unique constraint).
 
 INSERT INTO resources (slug, name, url, description, type, pillar, tags, level, author, expert_take, language, is_free, is_featured) VALUES
 

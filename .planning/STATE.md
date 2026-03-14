@@ -1,0 +1,112 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: completed
+stopped_at: "Completed 04-02-PLAN.md: sync-raindrop edge function live, 5 MCP queries verified, Gemini 2.5 Flash classification working"
+last_updated: "2026-03-13T17:15:09.322Z"
+last_activity: 2026-03-13 -- Completed Phase 04 infrastructure and deploy (all 3 plans verified)
+progress:
+  total_phases: 4
+  completed_phases: 4
+  total_plans: 10
+  completed_plans: 10
+  percent: 100
+---
+
+# Project State
+
+## Project Reference
+
+See: .planning/PROJECT.md (updated 2026-03-12)
+
+**Core value:** Users can quickly find the right tool or resource for their product building workflow, filtered by need, with expert takes that explain why.
+**Current focus:** Phase 3: Security and Performance
+
+## Current Position
+
+Phase: 4 of 4 complete (Infrastructure and Deploy)
+Next: None — v1.0 milestone achieved
+Status: All plans complete
+Last activity: 2026-03-13 -- Completed Phase 04 infrastructure and deploy (all 3 plans verified)
+
+Progress: [██████████] 100%
+
+## Performance Metrics
+
+**Velocity:**
+- Total plans completed: 5
+- Average duration: 2 min
+- Total execution time: 0.15 hours
+
+**By Phase:**
+
+| Phase | Plans | Total | Avg/Plan |
+|-------|-------|-------|----------|
+| 01-stabilize | 2 | 4 min | 2 min |
+| 02-terminal-design-system | 3 | 5 min | 2 min |
+
+**Recent Trend:**
+- Last 5 plans: 2 min
+- Trend: stable
+
+*Updated after each plan completion*
+| Phase 01-stabilize P02 | 1 min | 2 tasks | 27 files |
+| Phase 02-terminal-design-system P01 | 1 | 2 tasks | 4 files |
+| Phase 02-terminal-design-system P02 | 2 min | 2 tasks | 8 files |
+| Phase 02-terminal-design-system P03 | 2 min | 2 tasks | 6 files |
+| Phase 03-security-and-performance P01 | 2 | 3 tasks | 4 files |
+| Phase 03-security-and-performance P02 | 7 | 2 tasks | 6 files |
+| Phase 04-infrastructure-and-deploy P01 | 2 | 2 tasks | 2 files |
+| Phase 04-infrastructure-and-deploy P02 | 45 min | 2 tasks | 1 files |
+| Phase 04-infrastructure-and-deploy P03 | 10 | 2 tasks | 0 files |
+
+## Accumulated Context
+
+### Decisions
+
+Decisions are logged in PROJECT.md Key Decisions table.
+Recent decisions affecting current work:
+
+- Roadmap: Design overhaul (Phase 2) before infrastructure (Phase 4) -- design is the core deliverable and has no database dependency
+- Roadmap: Security and performance grouped together (Phase 3) -- both are surgical fixes that must land before deploy
+- Roadmap: Coarse granularity (4 phases) to match 5-day deadline
+- [Phase 01-stabilize]: Dependency pinning: exact versions from package-lock.json used as source of truth, not the plan's suggested versions
+- [Phase 01-stabilize]: next-themes removal: ThemeSwitcher stubbed as null component, dark mode deferred to Phase 2 Design Overhaul
+- [Phase 01-stabilize]: tsconfig: supabase/functions excluded from Next.js TypeScript compilation to prevent Deno ESM URL resolution errors
+- [Phase 01-stabilize]: Boilerplate removal: app/layout.tsx was already clean from plan 01-01; only page.tsx needed ThemeSwitcher removal
+- [Phase 02-terminal-design-system]: Geist_Mono uses .variable not .className on body so Tailwind font-mono resolves via CSS variable
+- [Phase 02-terminal-design-system]: lib/constants.ts has zero imports for edge-function safety and circular dep prevention
+- [Phase 02-terminal-design-system]: TYPE_BADGE_CLASSES uses monochrome terminal palette (cyan for tool/framework, neutral for rest) instead of rainbow colors
+- [Phase 02-terminal-design-system]: rounded-none used idiomatically across all shadcn primitives for terminal sharp-corner aesthetic
+- [Phase 02-terminal-design-system]: Free=text-primary(cyan), Paid=text-muted-foreground, Featured=border-primary text-primary in terminal palette
+- [Phase 02-terminal-design-system]: lib/validators.ts has zero imports — intentionally duplicates type definitions from lib/constants.ts for Deno/edge-function compatibility
+- [Phase 02-terminal-design-system]: ValidationError class carries field + reason for structured error handling in Phase 4 sync pipeline
+- [Phase 03-security-and-performance]: sanitizeSearch unexported, no API surface change for getResources callers
+- [Phase 03-security-and-performance]: sync-raindrop auth check before try block — missing SYNC_SECRET returns 401 not 500
+- [Phase 03-security-and-performance]: instrumentation.ts dependency-free — plain Array.filter, no Zod or envalid
+- [Phase 03-security-and-performance]: PaginationBar hides itself when totalPages <= 1, page=1 omitted from URL for clean URLs
+- [Phase 03-security-and-performance]: filteredCount replaces getResourceCount() in ResourceGrid — count is now filter-scoped, not total
+- [Phase 03-security-and-performance]: Page reset pattern: all router.push handlers call params.delete('page') before navigating
+- [Phase 04-infrastructure-and-deploy]: Used Supabase Management API /database/query endpoint instead of MCP apply_migration (CLI not installed, MCP migrations endpoint 404)
+- [Phase 04-infrastructure-and-deploy]: 002_seed tracking: version 20240101000002 inserted retroactively with ON CONFLICT DO NOTHING — safe to retry
+- [Phase 04-infrastructure-and-deploy]: Production URL is https://product-builder-directory.vercel.app (canonical short URL from Vercel main branch deploy)
+- [Phase 04-infrastructure-and-deploy]: .vercel/project.json gitignored per Vercel convention; SYNC_SECRET matches Supabase edge function secrets from Plan 02
+- [Phase 04-infrastructure-and-deploy P02]: Switched AI classification from Claude Haiku to Gemini 2.5 Flash (v1beta) — user preference; 2.0 models unavailable to new API users
+- [Phase 04-infrastructure-and-deploy P02]: Gemini requires responseMimeType: application/json + maxOutputTokens: 2048 for reliable structured JSON output
+- [Phase 04-infrastructure-and-deploy P02]: sync-raindrop deployed as version 17 ACTIVE; DB grew from 20 to 25 resources after manual invocation test
+
+### Pending Todos
+
+None.
+
+### Blockers/Concerns
+
+- Deadline is March 17 (5 days). No margin for scope creep.
+- Pagination UX with URL-driven filters needs design attention during Phase 3 planning.
+
+## Session Continuity
+
+Last session: 2026-03-13T15:35:17.296Z
+Stopped at: Completed 04-02-PLAN.md: sync-raindrop edge function live, 5 MCP queries verified, Gemini 2.5 Flash classification working
+Resume file: None

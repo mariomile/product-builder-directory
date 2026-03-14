@@ -21,20 +21,35 @@ export type Resource = {
   updated_at: string;
 };
 
+function sanitizeSearch(raw: string): string {
+  // Strip PostgREST operator chars: comma separates conditions,
+  // parens/dot are filter syntax, others are injection vectors
+  return raw.replace(/[,().%"'\\;|*]/g, "").trim().slice(0, 100);
+}
+
+const PAGE_SIZE = 20;
+
 export async function getResources(params: {
   search?: string;
   type?: string;
   pillar?: string;
   level?: string;
   free?: string;
-}) {
+  page?: string;
+}): Promise<{ data: Resource[]; filteredCount: number; totalPages: number; currentPage: number }> {
   const supabase = await createClient();
-  let query = supabase.from("resources").select("*");
+  const page = Math.max(1, parseInt(params.page ?? "1", 10));
+  const offset = (page - 1) * PAGE_SIZE;
+
+  let query = supabase.from("resources").select("*", { count: "exact" });
 
   if (params.search) {
-    query = query.or(
-      `name.ilike.%${params.search}%,description.ilike.%${params.search}%,expert_take.ilike.%${params.search}%`
-    );
+    const safe = sanitizeSearch(params.search);
+    if (safe) {
+      query = query.or(
+        `name.ilike.%${safe}%,description.ilike.%${safe}%,expert_take.ilike.%${safe}%`
+      );
+    }
   }
   if (params.type) query = query.eq("type", params.type);
   if (params.pillar) query = query.eq("pillar", params.pillar);
@@ -42,12 +57,19 @@ export async function getResources(params: {
   if (params.free === "true") query = query.eq("is_free", true);
   if (params.free === "false") query = query.eq("is_free", false);
 
-  const { data, error } = await query
+  const { data, count, error } = await query
     .order("is_featured", { ascending: false })
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .range(offset, offset + PAGE_SIZE - 1);
 
   if (error) throw error;
-  return data as Resource[];
+  const filteredCount = count ?? 0;
+  return {
+    data: data as Resource[],
+    filteredCount,
+    totalPages: Math.ceil(filteredCount / PAGE_SIZE),
+    currentPage: page,
+  };
 }
 
 export async function getResourceBySlug(slug: string) {

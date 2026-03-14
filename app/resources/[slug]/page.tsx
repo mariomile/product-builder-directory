@@ -1,34 +1,14 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { ResourceDetailSkeleton } from "@/components/resource-skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getResourceBySlug, getRelatedResources } from "@/lib/queries";
 import { ResourceCard } from "@/components/resource-card";
+import { TYPE_LABELS, PILLAR_LABELS } from "@/lib/constants";
 import type { Metadata } from "next";
-
-const typeLabels: Record<string, string> = {
-  tool: "Tool",
-  course: "Course",
-  article: "Article",
-  newsletter: "Newsletter",
-  book: "Book",
-  podcast: "Podcast",
-  video: "Video",
-  community: "Community",
-  x_post: "X Post",
-  framework: "Framework",
-};
-
-const pillarLabels: Record<string, string> = {
-  discovery: "Discovery",
-  design: "Design",
-  delivery: "Delivery",
-  strategy: "Strategy",
-  stack: "Stack & Tools",
-  meta_skill: "Meta-skill",
-};
 
 export async function generateMetadata({
   params,
@@ -63,13 +43,7 @@ export default function ResourcePage({
         </div>
       </nav>
 
-      <Suspense
-        fallback={
-          <div className="flex-1 flex items-center justify-center py-20">
-            <p className="text-muted-foreground">Loading resource...</p>
-          </div>
-        }
-      >
+      <Suspense fallback={<ResourceDetailSkeleton />}>
         <ResourceDetail paramsPromise={params} />
       </Suspense>
     </main>
@@ -105,29 +79,29 @@ async function ResourceDetail({
       {/* Resource header */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-2 flex-wrap">
-          <Badge>{typeLabels[resource.type] || resource.type}</Badge>
+          <Badge>{TYPE_LABELS[resource.type] || resource.type}</Badge>
           <Badge variant="outline">
-            {pillarLabels[resource.pillar] || resource.pillar}
+            {PILLAR_LABELS[resource.pillar] || resource.pillar}
           </Badge>
           <Badge variant="outline" className="capitalize">
             {resource.level}
           </Badge>
           {resource.is_featured && (
-            <Badge className="bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200">
+            <Badge variant="outline" className="border-primary text-primary">
               Featured
             </Badge>
           )}
           {resource.is_free ? (
             <Badge
               variant="outline"
-              className="text-green-600 border-green-300"
+              className="text-primary border-primary"
             >
               Free
             </Badge>
           ) : (
             <Badge
               variant="outline"
-              className="text-orange-600 border-orange-300"
+              className="text-muted-foreground border-border"
             >
               Paid
             </Badge>
@@ -193,7 +167,7 @@ async function ResourceDetail({
       {related.length > 0 && (
         <section className="mt-8">
           <h2 className="text-xl font-semibold mb-4">
-            More in {pillarLabels[resource.pillar] || resource.pillar}
+            More in {PILLAR_LABELS[resource.pillar] || resource.pillar}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {related.map((r) => (
