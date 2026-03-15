@@ -10,30 +10,21 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { TYPES, PILLARS, LEVELS } from "@/lib/constants";
-import { getFilteredCountClient } from "@/lib/client-queries";
-
-type PendingFilters = {
-  type: string | null;
-  pillar: string | null;
-  level: string | null;
-  free: string | null;
-};
 
 function FilterGroup({
   label,
-  options,
   description,
-  value,
-  onChange,
+  options,
+  activeValues,
+  onToggle,
 }: {
   label: string;
-  paramKey: string;
-  options: { value: string; label: string }[];
   description?: string;
-  value: string | null;
-  onChange: (v: string | null) => void;
+  options: { value: string; label: string }[];
+  activeValues: string[];
+  onToggle: (value: string) => void;
 }) {
   return (
     <div className="flex flex-col gap-2">
@@ -47,9 +38,9 @@ function FilterGroup({
         {options.map((option) => (
           <Badge
             key={option.value}
-            variant={value === option.value ? "default" : "outline"}
+            variant={activeValues.includes(option.value) ? "default" : "outline"}
             className="cursor-pointer hover:bg-accent transition-colors font-mono text-xs"
-            onClick={() => onChange(value === option.value ? null : option.value)}
+            onClick={() => onToggle(option.value)}
           >
             {option.label}
           </Badge>
@@ -62,67 +53,76 @@ function FilterGroup({
 export function Filters() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
-  const [pendingFilters, setPendingFilters] = useState<PendingFilters>({
-    type: null,
-    pillar: null,
-    level: null,
-    free: null,
+  const [pending, setPending] = useState<Record<string, string[]>>({
+    type: [],
+    pillar: [],
+    level: [],
+    free: [],
   });
-  const [pendingCount, setPendingCount] = useState<number | null>(null);
-  const [countLoading, setCountLoading] = useState(false);
+  const [applying, setApplying] = useState(false);
 
   const activeCount = ["type", "pillar", "level", "free"].filter((key) =>
     searchParams.has(key)
   ).length;
 
-  const search = searchParams.get("search") ?? undefined;
-
-  // Sync pending state from URL when dialog opens
-  const handleOpenChange = (isOpen: boolean) => {
-    if (isOpen) {
-      setPendingFilters({
-        type: searchParams.get("type"),
-        pillar: searchParams.get("pillar"),
-        level: searchParams.get("level"),
-        free: searchParams.get("free"),
-      });
-      setPendingCount(null);
+  // Close dialog when the apply transition completes
+  useEffect(() => {
+    if (applying && !isPending) {
+      setOpen(false);
+      setApplying(false);
     }
-    setOpen(isOpen);
+  }, [applying, isPending]);
+
+  const handleOpenChange = (val: boolean) => {
+    if (val) {
+      setPending({
+        type: searchParams.getAll("type"),
+        pillar: searchParams.getAll("pillar"),
+        level: searchParams.getAll("level"),
+        free: searchParams.getAll("free"),
+      });
+    }
+    setOpen(val);
   };
 
-  // Debounced live count while dialog is open
-  useEffect(() => {
-    if (!open) return;
-    setCountLoading(true);
-    const timer = setTimeout(async () => {
-      const count = await getFilteredCountClient({
-        search,
-        ...pendingFilters,
-      });
-      setPendingCount(count);
-      setCountLoading(false);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [open, pendingFilters, search]);
+  const handleToggle = (paramKey: string, value: string, singleSelect = false) => {
+    setPending((prev) => {
+      const current = prev[paramKey] ?? [];
+      if (singleSelect) {
+        return { ...prev, [paramKey]: current.includes(value) ? [] : [value] };
+      }
+      return {
+        ...prev,
+        [paramKey]: current.includes(value)
+          ? current.filter((v) => v !== value)
+          : [...current, value],
+      };
+    });
+  };
 
-  const handleApply = () => {
+  const applyFilters = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("page");
+    ["type", "pillar", "level", "free"].forEach((k) => params.delete(k));
+    Object.entries(pending).forEach(([key, values]) => {
+      values.forEach((v) => params.append(key, v));
+    });
+    setApplying(true);
+    startTransition(() => {
+      router.push(`/?${params.toString()}`);
+    });
+  };
+
+  const clearAll = () => {
     const params = new URLSearchParams(searchParams.toString());
     ["type", "pillar", "level", "free", "page"].forEach((k) => params.delete(k));
-    if (pendingFilters.type) params.set("type", pendingFilters.type);
-    if (pendingFilters.pillar) params.set("pillar", pendingFilters.pillar);
-    if (pendingFilters.level) params.set("level", pendingFilters.level);
-    if (pendingFilters.free) params.set("free", pendingFilters.free);
-    router.push(`/?${params.toString()}`);
-    setOpen(false);
+    setPending({ type: [], pillar: [], level: [], free: [] });
+    startTransition(() => {
+      router.push(`/?${params.toString()}`);
+    });
   };
-
-  const clearPending = () => {
-    setPendingFilters({ type: null, pillar: null, level: null, free: null });
-  };
-
-  const pendingActiveCount = Object.values(pendingFilters).filter(Boolean).length;
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -149,47 +149,43 @@ export function Filters() {
         <div className="flex flex-col gap-5 py-2">
           <FilterGroup
             label="--type"
-            paramKey="type"
-            options={TYPES}
             description="Filter by content format"
-            value={pendingFilters.type}
-            onChange={(v) => setPendingFilters((p) => ({ ...p, type: v }))}
+            options={TYPES}
+            activeValues={pending.type ?? []}
+            onToggle={(v) => handleToggle("type", v)}
           />
           <FilterGroup
             label="--pillar"
-            paramKey="pillar"
-            options={PILLARS}
             description="Filter by product discipline"
-            value={pendingFilters.pillar}
-            onChange={(v) => setPendingFilters((p) => ({ ...p, pillar: v }))}
+            options={PILLARS}
+            activeValues={pending.pillar ?? []}
+            onToggle={(v) => handleToggle("pillar", v)}
           />
           <div className="flex flex-col sm:flex-row gap-5">
             <FilterGroup
               label="--level"
-              paramKey="level"
-              options={LEVELS}
               description="Filter by experience level"
-              value={pendingFilters.level}
-              onChange={(v) => setPendingFilters((p) => ({ ...p, level: v }))}
+              options={LEVELS}
+              activeValues={pending.level ?? []}
+              onToggle={(v) => handleToggle("level", v)}
             />
             <FilterGroup
               label="--price"
-              paramKey="free"
               description="Filter by pricing model"
               options={[
                 { value: "true", label: "Free" },
                 { value: "false", label: "Paid" },
               ]}
-              value={pendingFilters.free}
-              onChange={(v) => setPendingFilters((p) => ({ ...p, free: v }))}
+              activeValues={pending.free ?? []}
+              onToggle={(v) => handleToggle("free", v, true)}
             />
           </div>
         </div>
 
         <DialogFooter className="sm:justify-between items-center">
-          {pendingActiveCount > 0 ? (
+          {activeCount > 0 ? (
             <button
-              onClick={clearPending}
+              onClick={clearAll}
               className="text-xs font-mono text-muted-foreground hover:text-primary transition-colors"
             >
               [clear filters]
@@ -197,22 +193,17 @@ export function Filters() {
           ) : (
             <span />
           )}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setOpen(false)}
-              className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors border border-border px-2 py-1 hover:border-foreground"
-            >
-              [cancel]
-            </button>
-            <button
-              onClick={handleApply}
-              className="text-xs font-mono text-foreground hover:text-primary transition-colors border border-foreground hover:border-primary px-2 py-1"
-            >
-              {countLoading || pendingCount === null
-                ? "[apply...]"
-                : `[apply — ${pendingCount} results]`}
-            </button>
-          </div>
+          <button
+            onClick={applyFilters}
+            disabled={isPending}
+            className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors border border-border px-2 py-1 hover:border-foreground disabled:opacity-50 min-w-[60px] text-center"
+          >
+            {isPending ? (
+              <span className="animate-pulse text-primary">...</span>
+            ) : (
+              "[apply]"
+            )}
+          </button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

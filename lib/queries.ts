@@ -31,9 +31,9 @@ const PAGE_SIZE = 20;
 
 export async function getResources(params: {
   search?: string;
-  type?: string;
-  pillar?: string;
-  level?: string;
+  type?: string | string[];
+  pillar?: string | string[];
+  level?: string | string[];
   free?: string;
   page?: string;
 }): Promise<{ data: Resource[]; filteredCount: number; totalPages: number; currentPage: number }> {
@@ -51,9 +51,18 @@ export async function getResources(params: {
       );
     }
   }
-  if (params.type) query = query.eq("type", params.type);
-  if (params.pillar) query = query.eq("pillar", params.pillar);
-  if (params.level) query = query.eq("level", params.level);
+  if (params.type) {
+    const vals = Array.isArray(params.type) ? params.type : [params.type];
+    query = vals.length === 1 ? query.eq("type", vals[0]) : query.in("type", vals);
+  }
+  if (params.pillar) {
+    const vals = Array.isArray(params.pillar) ? params.pillar : [params.pillar];
+    query = vals.length === 1 ? query.eq("pillar", vals[0]) : query.in("pillar", vals);
+  }
+  if (params.level) {
+    const vals = Array.isArray(params.level) ? params.level : [params.level];
+    query = vals.length === 1 ? query.eq("level", vals[0]) : query.in("level", vals);
+  }
   if (params.free === "true") query = query.eq("is_free", true);
   if (params.free === "false") query = query.eq("is_free", false);
 
