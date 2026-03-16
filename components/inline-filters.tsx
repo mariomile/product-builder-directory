@@ -25,7 +25,7 @@ function getActiveValues(searchParams: URLSearchParams, key: string): string[] {
 export function InlineFilters() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
   const toggleCategory = (key: string) => {
@@ -83,15 +83,16 @@ export function InlineFilters() {
             <button
               key={cat.key}
               onClick={() => toggleCategory(cat.key)}
+              aria-expanded={isExpanded}
               className={`text-xs font-mono px-2 py-1 border transition-colors ${
                 hasActive
-                  ? "border-primary/40 text-primary"
+                  ? "border-primary text-primary"
                   : "border-border text-muted-foreground hover:text-foreground hover:border-foreground"
               }`}
             >
               {cat.label}
               {hasActive && (
-                <span className="opacity-60 ml-1">({active.length})</span>
+                <span className="ml-1">({active.length})</span>
               )}
               {isExpanded && <span className="ml-1 opacity-60">▾</span>}
             </button>
@@ -109,32 +110,27 @@ export function InlineFilters() {
       </div>
 
       {/* Expanded options panel */}
-      {expandedCategory && (
-        <div className="mt-2 pl-2 border-l-2 border-primary/30 flex gap-1.5 flex-wrap py-2">
-          {FILTER_CATEGORIES.find((c) => c.key === expandedCategory)?.options.map(
-            (option) => {
-              const isActive = getActiveValues(
-                searchParams,
-                expandedCategory
-              ).includes(option.value);
-
-              return (
-                <button
-                  key={option.value}
-                  onClick={() => toggleFilter(expandedCategory, option.value)}
-                  className={`text-xs font-mono px-2 py-0.5 border transition-colors ${
-                    isActive
-                      ? "border-primary/50 text-primary bg-primary/[0.08]"
-                      : "border-border text-muted-foreground hover:text-foreground hover:border-foreground"
-                  }`}
-                >
-                  {option.label}
-                </button>
-              );
-            }
-          )}
-        </div>
-      )}
+      {expandedCategory && (() => {
+        const cat = FILTER_CATEGORIES.find((c) => c.key === expandedCategory);
+        const activeValues = getActiveValues(searchParams, expandedCategory);
+        return (
+          <div className={`mt-2 pl-2 border-l-2 border-primary/30 flex gap-1.5 flex-wrap py-2${isPending ? " opacity-60 pointer-events-none" : ""}`} role="group" aria-label={cat?.label}>
+            {cat?.options.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => toggleFilter(expandedCategory, option.value)}
+                className={`text-xs font-mono px-2 py-0.5 border transition-colors ${
+                  activeValues.includes(option.value)
+                    ? "border-primary/50 text-primary bg-primary/[0.08]"
+                    : "border-border text-muted-foreground hover:text-foreground hover:border-foreground"
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        );
+      })()}
     </div>
   );
 }
