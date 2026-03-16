@@ -83,7 +83,7 @@ async function ResourceDetail({
               : {}),
             keywords: resource.tags,
             isAccessibleForFree: resource.is_free,
-          }),
+          }).replace(/</g, "\\u003c"),
         }}
       />
       {/* Back link */}

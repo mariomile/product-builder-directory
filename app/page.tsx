@@ -68,7 +68,7 @@ export default function Home({
           </p>
           <h1
             aria-label="Product Builder Directory"
-            className="text-[clamp(2.5rem,7.5vw,6rem)] font-black uppercase tracking-tighter leading-[0.85]"
+            className="text-[clamp(3.5rem,11vw,9rem)] font-black uppercase tracking-tighter leading-[0.85]"
           >
             <div aria-hidden="true" className="animate-boot" style={{ animationDelay: "160ms" }}>
               Product
