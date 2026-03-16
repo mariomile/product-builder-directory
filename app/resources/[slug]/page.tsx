@@ -68,6 +68,24 @@ async function ResourceDetail({
 
   return (
     <div className="flex-1 w-full max-w-3xl mx-auto px-5 py-8 flex flex-col gap-8">
+      {/* JSON-LD structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            name: resource.name,
+            url: resource.url,
+            description: resource.description,
+            ...(resource.author
+              ? { author: { "@type": "Person", name: resource.author } }
+              : {}),
+            keywords: resource.tags,
+            isAccessibleForFree: resource.is_free,
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
       {/* Back link */}
       <Link
         href="/"

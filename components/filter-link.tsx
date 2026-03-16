@@ -1,5 +1,6 @@
 "use client";
 
+import { useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export function FilterLink({
@@ -13,6 +14,7 @@ export function FilterLink({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
 
   return (
     <button
@@ -22,9 +24,13 @@ export function FilterLink({
         const params = new URLSearchParams(searchParams.toString());
         params.delete("page");
         params.set(paramKey, value);
-        router.push(`/?${params.toString()}`);
+        startTransition(() => {
+          router.push(`/?${params.toString()}`);
+        });
       }}
-      className="hover:text-primary transition-colors cursor-pointer"
+      className={`hover:text-primary transition-colors cursor-pointer ${
+        isPending ? "opacity-50" : ""
+      }`}
     >
       {children}
     </button>

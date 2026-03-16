@@ -3,6 +3,15 @@ import type { Resource } from "@/lib/queries";
 import { TYPE_LABELS, PILLAR_LABELS } from "@/lib/constants";
 import { ArrowUpRight } from "lucide-react";
 import { FilterLink } from "@/components/filter-link";
+import { CopyLinkButton } from "@/components/copy-link-button";
+import Image from "next/image";
+
+function isNewThisWeek(createdAt: string): boolean {
+  const created = new Date(createdAt);
+  const now = new Date();
+  const diffMs = now.getTime() - created.getTime();
+  return diffMs >= 0 && diffMs < 7 * 24 * 60 * 60 * 1000;
+}
 
 export function ResourceCard({
   resource,
@@ -11,6 +20,8 @@ export function ResourceCard({
   resource: Resource;
   index?: number;
 }) {
+  const isNew = isNewThisWeek(resource.created_at);
+
   return (
     <a
       href={resource.url}
@@ -42,10 +53,25 @@ export function ResourceCard({
             </span>
           </div>
 
-          {/* Name + external arrow */}
+          {/* Name + logo + external arrow */}
           <div className="flex items-start gap-2">
+            {resource.logo_url && (
+              <Image
+                src={resource.logo_url}
+                alt=""
+                width={20}
+                height={20}
+                unoptimized
+                className="flex-shrink-0 mt-0.5 object-contain"
+              />
+            )}
             <CardTitle className="leading-tight flex-1 text-xl">
               {resource.name}
+              {isNew && (
+                <span className="ml-2 text-xs text-primary font-mono align-middle">
+                  NEW
+                </span>
+              )}
             </CardTitle>
             <ArrowUpRight className="h-3.5 w-3.5 flex-shrink-0 mt-1 text-muted-foreground opacity-0 -translate-x-1 transition-all duration-150 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-primary" />
           </div>
@@ -59,10 +85,13 @@ export function ResourceCard({
             </p>
           )}
 
-          {/* Tags */}
-          <p className="text-xs text-muted-foreground font-mono">
-            {resource.tags.slice(0, 4).map((t) => `#${t}`).join("  ")}
-          </p>
+          {/* Tags + copy link */}
+          <div className="flex items-center justify-between gap-2">
+            <p className="text-xs text-muted-foreground font-mono">
+              {resource.tags.slice(0, 4).map((t) => `#${t}`).join("  ")}
+            </p>
+            <CopyLinkButton url={resource.url} />
+          </div>
         </CardContent>
       </Card>
     </a>

@@ -1,8 +1,7 @@
 import { Suspense } from "react";
 import { ResourceGrid } from "@/components/resource-grid";
 import { SearchBar } from "@/components/search-bar";
-import { Filters } from "@/components/filters";
-import { FilterChips } from "@/components/filter-chips";
+import { InlineFilters } from "@/components/inline-filters";
 import { ResourceGridSkeleton } from "@/components/resource-skeleton";
 import { getResourceCount } from "@/lib/queries";
 import { CmdKHint } from "@/components/cmdk-hint";
@@ -29,6 +28,19 @@ export default function Home({
 }) {
   return (
     <main className="min-h-screen flex flex-col">
+      {/* JSON-LD structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Product Builder Directory",
+            url: "https://product-builder-directory.vercel.app",
+            description: "Curated resources for product builders",
+          }),
+        }}
+      />
       {/* Nav — terminal titlebar */}
       <nav className="w-full border-b border-border">
         <div className="w-full max-w-6xl mx-auto px-5 h-10 flex items-center text-xs text-muted-foreground font-mono">
@@ -86,10 +98,7 @@ export default function Home({
             <SearchBar />
           </Suspense>
           <Suspense>
-            <Filters />
-          </Suspense>
-          <Suspense>
-            <FilterChips />
+            <InlineFilters />
           </Suspense>
         </section>
 
@@ -117,6 +126,15 @@ export default function Home({
         </p>
         <p className="text-muted-foreground/40 hidden md:block">
           // vim: j/k navigate, o open, ⌘K search
+        </p>
+        <p className="text-muted-foreground/40">
+          //&nbsp;
+          <a
+            href="mailto:hello@mariomiletta.com?subject=Resource%20Submission%20-%20Product%20Builder%20Directory"
+            className="hover:text-primary transition-colors"
+          >
+            submit a resource
+          </a>
         </p>
       </footer>
     </main>
