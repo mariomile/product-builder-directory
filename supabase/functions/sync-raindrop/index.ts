@@ -34,6 +34,7 @@ interface AIClassification {
   level: string;
   expert_take: string;
   tags: string[];
+  is_free: boolean;
 }
 
 function slugify(text: string): string {
@@ -42,6 +43,17 @@ function slugify(text: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "")
     .slice(0, 80);
+}
+
+function cleanName(raw: string): string {
+  return raw
+    // Strip GitHub "user/repo: description" prefix
+    .replace(/^[a-zA-Z0-9_-]+\/[a-zA-Z0-9_.-]+:\s*/, "")
+    // Strip "path/to/thing at branch · org/repo" suffix
+    .replace(/\s+at\s+\w+\s+·\s+[\w/-]+$/, "")
+    // Strip trailing " | Site Name" or " — tagline"
+    .replace(/\s*[|—–]\s*[^|—–]+$/, "")
+    .trim();
 }
 
 async function fetchRaindropBookmarks(): Promise<RaindropItem[]> {
@@ -79,9 +91,10 @@ Rules:
 - level must be exactly one of: beginner, intermediate, advanced
 - expert_take: 2-3 sentences on why a product builder should care. Be specific and opinionated.
 - tags: array of 3-5 lowercase strings (e.g. ["claude-code", "vibe-coding", "user-research"])
+- is_free: boolean — true if the core resource is free to use (open-source, free tier, free content), false if it requires payment
 
 Example output:
-{"type":"tool","pillar":"delivery","level":"intermediate","expert_take":"This tool accelerates...","tags":["ai","productivity"]}
+{"type":"tool","pillar":"delivery","level":"intermediate","expert_take":"This tool accelerates...","tags":["ai","productivity"],"is_free":true}
 
 Now classify the resource above:`;
 
@@ -166,18 +179,19 @@ Deno.serve(async (req) => {
     const results = [];
     for (const bookmark of newBookmarks) {
       try {
+        const name = cleanName(bookmark.title);
         const classification = await classifyWithGemini(
-          bookmark.title,
+          name,
           bookmark.link,
           bookmark.excerpt,
           bookmark.tags.filter((t) => t !== RAINDROP_TAG)
         );
 
-        const slug = slugify(bookmark.title);
+        const slug = slugify(name);
 
         const { error } = await supabase.from("resources").insert({
           slug,
-          name: bookmark.title,
+          name,
           url: bookmark.link,
           description: bookmark.excerpt || "",
           type: classification.type,
@@ -186,15 +200,15 @@ Deno.serve(async (req) => {
           tags: classification.tags,
           expert_take: classification.expert_take,
           language: "en",
-          is_free: true,
+          is_free: classification.is_free ?? true,
           is_featured: false,
           raindrop_id: String(bookmark._id),
         });
 
         if (error) {
-          results.push({ name: bookmark.title, status: "error", error: error.message });
+          results.push({ name, status: "error", error: error.message });
         } else {
-          results.push({ name: bookmark.title, status: "synced" });
+          results.push({ name, status: "synced" });
         }
       } catch (err) {
         results.push({
