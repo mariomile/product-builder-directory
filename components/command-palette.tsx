@@ -29,6 +29,7 @@ import {
   ExternalLink,
   ArrowLeft,
   X,
+  Clock,
 } from "lucide-react";
 
 type SearchResult = {
@@ -278,6 +279,29 @@ export function CommandPalette() {
                 {/* Quick actions — show when no search and no filter active */}
                 {showQuickActions && (
                   <>
+                    <CommandGroup heading="// quick actions">
+                      <CommandItem
+                        value="all-resources"
+                        onSelect={() => {
+                          setOpen(false);
+                          window.location.href = "/";
+                        }}
+                      >
+                        <Clock className="h-3 w-3 text-muted-foreground" />
+                        <span>Browse all resources (newest first)</span>
+                      </CommandItem>
+                      <CommandItem
+                        value="free-resources"
+                        onSelect={() => {
+                          setOpen(false);
+                          window.location.href = "/?free=true";
+                        }}
+                      >
+                        <Sparkles className="h-3 w-3 text-muted-foreground" />
+                        <span>Free resources only</span>
+                      </CommandItem>
+                    </CommandGroup>
+                    <CommandSeparator />
                     <CommandGroup heading="// filter by type">
                       {TYPES.map((t) => (
                         <CommandItem

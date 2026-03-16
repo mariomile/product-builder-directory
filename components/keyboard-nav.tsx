@@ -88,5 +88,26 @@ export function KeyboardNav({ children }: { children: React.ReactNode }) {
     setFocusedIndex(-1);
   }, [children]);
 
+  // Touch support: highlight card on touchstart before link opens
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      if (!touch) return;
+      const target = document.elementFromPoint(touch.clientX, touch.clientY);
+      if (!target) return;
+      const card = (target as HTMLElement).closest<HTMLElement>("[data-card-index]");
+      if (!card) return;
+      const cards = getCards();
+      const idx = cards.indexOf(card);
+      if (idx !== -1) setFocusedIndex(idx);
+    };
+
+    container.addEventListener("touchstart", handleTouchStart, { passive: true });
+    return () => container.removeEventListener("touchstart", handleTouchStart);
+  }, [getCards]);
+
   return <div ref={containerRef}>{children}</div>;
 }
