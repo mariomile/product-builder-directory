@@ -1,9 +1,12 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Resource } from "@/lib/queries";
 import { TYPE_LABELS, PILLAR_LABELS } from "@/lib/constants";
 import { ArrowUpRight } from "lucide-react";
 import { FilterLink } from "@/components/filter-link";
 import { CopyLinkButton } from "@/components/copy-link-button";
+import Link from "next/link";
 import Image from "next/image";
 
 function isNewThisWeek(createdAt: string): boolean {
@@ -23,15 +26,22 @@ export function ResourceCard({
   const isNew = isNewThisWeek(resource.created_at);
 
   return (
-    <a
-      href={resource.url}
-      target="_blank"
-      rel="noreferrer"
+    <div
       data-card-index={index}
-      className="h-full block group animate-stagger"
+      className="h-full block group animate-stagger cursor-pointer"
       style={{ "--i": index } as React.CSSProperties}
+      onClick={() => {
+        try {
+          const parsed = new URL(resource.url);
+          if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+            window.open(resource.url, "_blank", "noreferrer");
+          }
+        } catch {
+          /* invalid URL — do nothing */
+        }
+      }}
     >
-      <Card className="h-full cursor-pointer border-border hover:border-primary flex flex-col transition-[border-color,transform] duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0">
+      <Card className="h-full border-border hover:border-primary flex flex-col transition-[border-color,transform] duration-150 ease-out hover:-translate-y-0.5 active:translate-y-0">
         <CardHeader className="pb-3 flex-1">
           {/* Meta row */}
           <div className="flex items-center justify-between gap-2 mb-3">
@@ -85,15 +95,24 @@ export function ResourceCard({
             </p>
           )}
 
-          {/* Tags + copy link */}
+          {/* Tags + actions */}
           <div className="flex items-center justify-between gap-2">
             <p className="text-xs text-muted-foreground font-mono">
               {resource.tags.slice(0, 4).map((t) => `#${t}`).join("  ")}
             </p>
-            <CopyLinkButton url={resource.url} />
+            <div className="flex items-center gap-3">
+              <Link
+                href={`/resources/${resource.slug}`}
+                onClick={(e) => e.stopPropagation()}
+                className="text-xs font-mono text-muted-foreground hover:text-primary transition-colors"
+              >
+                details →
+              </Link>
+              <CopyLinkButton url={resource.url} />
+            </div>
           </div>
         </CardContent>
       </Card>
-    </a>
+    </div>
   );
 }

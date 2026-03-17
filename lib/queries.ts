@@ -107,6 +107,26 @@ export async function getRelatedResources(pillar: string, excludeSlug: string) {
   return data as Resource[];
 }
 
+export async function getRelatedByTags(
+  tags: string[],
+  excludeSlug: string,
+  limit = 4
+) {
+  if (!tags.length) return [];
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("resources")
+    .select("*")
+    .overlaps("tags", tags)
+    .neq("slug", excludeSlug)
+    .order("is_featured", { ascending: false })
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (error) throw error;
+  return data as Resource[];
+}
+
 export async function getResourceCount() {
   const supabase = await createClient();
   const { count, error } = await supabase
