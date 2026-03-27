@@ -85,7 +85,7 @@ export default function Home({
             style={{ animationDelay: "520ms" }}
           >
             <Typewriter
-              text="Evita il noise. Solo le migliori risorse sul Product Building, testate e curate da un team di esperti."
+              text="Cut through the noise. Only the best resources on Product Building, hand-picked and curated by experts."
               speed={25}
               startDelay={800}
             />
