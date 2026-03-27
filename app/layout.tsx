@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
   title: "Product Builder Directory",
   description:
-    "Evita il noise. Solo le migliori risorse sul Product Building, testate e curate da un team di esperti.",
+    "Cut through the noise. Only the best resources on Product Building, hand-picked and curated by Product Builders.",
 };
 
 const geistMono = Geist_Mono({
