@@ -85,7 +85,7 @@ export default function Home({
             style={{ animationDelay: "520ms" }}
           >
             <Typewriter
-              text="Cut through the noise. Only the best resources on Product Building, hand-picked and curated by experts."
+              text="Cut through the noise. Only the best resources on Product Building, hand-picked and curated by Product Builders."
               speed={25}
               startDelay={800}
             />
@@ -113,16 +113,7 @@ export default function Home({
       {/* Footer */}
       <footer className="w-full border-t border-border text-center py-6 text-xs text-muted-foreground font-mono flex flex-col gap-1">
         <p>
-          // curated by{" "}
-          <a
-            href="https://linkedin.com/in/mariomiletta"
-            target="_blank"
-            rel="noreferrer"
-            className="text-foreground hover:text-primary transition-colors"
-          >
-            Mario Miletta
-          </a>
-          {" "}— built with Next.js, Supabase &amp; Claude Code
+          // curated by Product Builders — built with Next.js, Supabase &amp; Claude Code
         </p>
         <p className="text-muted-foreground/40 hidden md:block">
           // vim: j/k navigate, o open, ⌘K search
